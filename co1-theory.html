@@ -1,196 +1,619 @@
-<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><title>BI Module 1: Theory and Simulation Dashboard</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Intelligence &amp; Data Visualization - CO1 Slides</title>
 <style>
-:root{--bg:#FAF7F0;--card:#fff;--ink:#222;--mut:#5A6070;--navy:#1F2A44;--gold:#B8932A;--tint:#EFE8D6;--good:#2e7d32;--bad:#b3261e;--line:#d9d2c0;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171f;--card:#1c2130;--ink:#ecebe6;--mut:#a3a8b5;--navy:#c9d3f2;--gold:#d4ae48;--tint:#2a2a22;--good:#66bb6a;--bad:#ef7b72;--line:#343b50;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#14171f;--card:#1c2130;--ink:#ecebe6;--mut:#a3a8b5;--navy:#c9d3f2;--gold:#d4ae48;--tint:#2a2a22;--good:#66bb6a;--bad:#ef7b72;--line:#343b50;color-scheme:dark}
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*,*:before,*:after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Calibri,"Segoe UI",system-ui,sans-serif}
-header{padding:20px 20px 8px;max-width:1100px;margin:auto}
-h1{font:700 24px Georgia,serif;color:var(--navy);margin:0}
-h2{font:700 17px Georgia,serif;color:var(--navy);margin:0 0 8px}
-.sub{color:var(--mut);margin:4px 0 0}
-.bar{display:flex;gap:12px;align-items:center;margin-top:10px;flex-wrap:wrap}
-#score{background:var(--tint);border:1px solid var(--gold);border-radius:8px;padding:4px 10px;font-weight:600}
-nav{display:flex;gap:6px;overflow-x:auto;padding:8px 20px;max-width:1100px;margin:auto;border-bottom:2px solid var(--gold)}
-nav button{white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 12px;border-radius:8px 8px 0 0;font:inherit;cursor:pointer}
-nav button.on{background:var(--navy);color:var(--bg);border-color:var(--navy);font-weight:600}
-main{max-width:1100px;margin:auto;padding:16px 20px 32px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:800px){.grid{grid-template-columns:1fr}}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px}
-.mut{color:var(--mut)}
-.app{background:var(--tint);border-left:4px solid var(--gold);padding:8px 10px;border-radius:4px}
-table{border-collapse:collapse;width:100%;font-size:13px}
-td,th{border:1px solid var(--line);padding:5px 7px;text-align:left}th{background:var(--tint)}
-.q{border-top:1px solid var(--line);padding:10px 0}
-.opts{display:flex;flex-wrap:wrap;gap:6px}
-.opts button,.rs{border:1px solid var(--navy);background:var(--card);color:var(--ink);padding:6px 10px;border-radius:6px;font:inherit;cursor:pointer}
-.opts button:disabled{cursor:default;opacity:.85}
-.opts button.good{border:2px solid var(--good);background:var(--tint)}
-.opts button.bad{border:2px solid var(--bad);text-decoration:line-through}
-.fb{margin:6px 0 0;color:var(--mut)}
-label{display:block;margin:8px 0 0;font-weight:600}
-input[type=range]{width:100%}
-.out{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
-.k{background:var(--tint);border:1px solid var(--gold);border-radius:8px;padding:8px;text-align:center}
-.k b{display:block;font-size:19px;color:var(--navy)}
-.br{display:flex;align-items:center;gap:8px;margin:4px 0;font-size:13px}
-.br i{display:block;height:14px;background:var(--navy);border-radius:3px}.br i.n{background:var(--bad)}
-
-.id{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-.id label{margin:0;flex:1 1 200px;font-size:13px}
-.id input{width:100%;margin-top:3px;padding:7px 9px;border:1px solid var(--navy);border-radius:6px;background:var(--card);color:var(--ink);font:inherit}
-textarea{width:100%;min-height:110px;padding:8px 10px;border:1px solid var(--navy);border-radius:6px;background:var(--card);color:var(--ink);font:inherit;resize:vertical}
-.qn{min-height:58px}.nl{font-size:13px;margin:8px 0 3px}
-.wc{font-size:12px;color:var(--mut);margin:4px 0 0}
-.warn{background:var(--tint);border-left:4px solid var(--bad);padding:8px 10px;border-radius:4px;margin:8px 0}
-.okb{background:var(--tint);border-left:4px solid var(--good);padding:8px 10px;border-radius:4px;margin:8px 0}
-.pb{border:2px solid var(--navy);background:var(--navy);color:var(--bg);padding:9px 16px;border-radius:8px;font:inherit;font-weight:600;cursor:pointer}
-.pb:disabled{opacity:.4;cursor:not-allowed}
-.rep h3{font:700 15px Georgia,serif;color:var(--navy);margin:16px 0 4px;border-top:1px solid var(--line);padding-top:10px}
-.rep .qb{margin:6px 0 10px;padding-left:8px;border-left:3px solid var(--line)}
-.rep .ans{white-space:pre-wrap;background:var(--tint);border-radius:6px;padding:8px 10px;margin:4px 0}
-.rep .hd{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin:8px 0}
-.top{display:flex;align-items:center;gap:12px;padding:10px 16px;background:#0F172A;color:#E2E8F0;flex-wrap:wrap}
-.top .brand{font-size:13px;letter-spacing:2px;color:#F5B041;font-weight:700}
-.top .crumb{font-size:13px;color:#94A3B8}
-.top .crumb a{color:#E2E8F0;text-decoration:none}
-.top .grow{flex:1}
-.top .btn{display:inline-flex;align-items:center;text-decoration:none;background:#F5B041;color:#14213D;font-weight:700;font-size:13px;padding:6px 14px;border-radius:6px}
-.top .btn.ghost{background:transparent;color:#E2E8F0;border:1px solid #2B3A55}
-.pr-p{background:var(--tint);border-left:4px solid var(--gold);padding:8px 10px;border-radius:4px;margin:10px 0 0;font-size:14px}
-@media print{
-:root:root:root{--bg:#fff;--card:#fff;--ink:#000;--mut:#333;--navy:#1F2A44;--gold:#B8932A;--tint:#f3efe3;--good:#2e7d32;--bad:#b3261e;--line:#bbb;color-scheme:light}
-.top,nav,#score,.id,.np,.sub{display:none!important}
-header{padding:0}main{padding:0}
-.card{border:none;padding:0}
-.rep h3{break-after:avoid}.rep .ans,.rep table{break-inside:avoid}
+:root {
+  --bg:#0F172A; --panel:#1E293B; --line:#2B3A55; --ink:#E2E8F0; --dim:#94A3B8;
+  --amber:#F5B041; --code:#0B1220;
 }
-</style></head><body>
-<div class="top"><div class="brand">BIDV &middot; 26MB5210E</div><div class="crumb"><a href="index.html">Course</a> &nbsp;/&nbsp; CO1 Theory dashboard</div><div class="grow"></div><a class="btn" href="co1-labs.html">Labs</a><a class="btn ghost" href="index.html">All modules</a></div>
-<header><h1>Module 1: From Data to Decisions</h1>
-<p class="sub">Business Intelligence &amp; Data Visualisation (26MB5210E) · theory and simulation tutorials</p>
-<div class="id"><label>Student name<input id="sn" type="text" autocomplete="name" placeholder="Your full name"></label><label>Student ID number<input id="si" type="text" placeholder="e.g. 2400012345"></label></div>
-<div class="bar"><span id="score"></span></div></header>
-<nav id="nav"></nav><main id="panel"></main>
+* { box-sizing:border-box; margin:0; padding:0; }
+html { height:100%; }
+body { background:var(--bg); color:var(--ink); font-family:Arial,"Helvetica Neue",sans-serif;
+  height:100dvh; overflow:hidden; display:flex; flex-direction:column; }
+header.top { flex-shrink:0; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  padding:10px 18px; background:rgba(15,23,42,.93); backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line); }
+.brand { font-size:13px; letter-spacing:2px; color:var(--amber); font-weight:700; }
+.crumb { font-size:13px; color:var(--dim); }
+.crumb a { color:var(--dim); text-decoration:none; }
+.crumb a:hover { color:var(--ink); }
+.top .grow { flex:1; }
+.btn { display:inline-flex; align-items:center; gap:6px; text-decoration:none;
+  background:var(--amber); color:#14213D; font-weight:700; font-size:14px;
+  padding:8px 18px; border-radius:8px; border:0; cursor:pointer; }
+.btn.ghost { background:transparent; color:var(--ink); border:1px solid var(--line); }
+
+.deck-wrap { flex:1; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; padding:4px 8px; overflow:hidden; position:relative; }
+.stage-box { position:relative; margin:0 auto; }
+.stage { position:relative; width:1280px; height:720px; transform-origin:top center;
+  border-radius:10px; overflow:hidden; box-shadow:0 30px 80px -20px rgba(0,0,0,.65);
+  cursor:pointer; background:#14213D; font-size:16px; }
+.slide { position:absolute; inset:0; opacity:0; pointer-events:none; transition:opacity .18s ease; }
+.slide.active { opacity:1; pointer-events:auto; }
+.slide .shp { color:#E8EEF8; }
+.slide .shp p { margin:0; }
+.nav { display:flex; align-items:center; gap:12px; padding:8px 0 2px; flex-wrap:wrap; justify-content:center; }
+.nav button { background:var(--panel); color:var(--ink); border:1px solid var(--line);
+  width:40px; height:40px; border-radius:50%; font-size:17px; cursor:pointer; }
+.nav button:hover { border-color:var(--amber); color:var(--amber); }
+.count { font-size:14px; color:var(--dim); min-width:70px; text-align:center; font-variant-numeric:tabular-nums; }
+.bar { position:absolute; left:0; top:0; height:3px; background:var(--amber); transition:width .2s ease; z-index:5; }
+.hint { font-size:12px; color:var(--dim); margin:0; text-align:center;
+  border-left:1px solid var(--line); padding-left:14px; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.hint kbd { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+  padding:1px 6px; font-size:11px; color:var(--ink); }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">BIDV &middot; 26MB5210E</div>
+  <div class="crumb"><a href="index.html">Course</a> &nbsp;/&nbsp; CO1 Slides</div>
+  <div class="grow"></div>
+  <a class="btn" href="co1-dashboard.html">Dashboard</a>
+  <a class="btn ghost" href="co1-labs.html">Labs</a>
+  <a class="btn ghost" href="index.html">All modules</a>
+</header>
+<div class="deck-wrap">
+  <div class="stage-box">
+    <div class="stage"><div class="bar" id="pbar"></div>
+<section class="slide" style="background:#14213D">
+<div class="shp" style="left:62px;top:53px;width:1152px;height:38px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:4.0px;font-size:24px;color:#F5B041"><span style="letter-spacing:4.0px;font-size:24px;color:#F5B041"><b>CO1</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:139px;width:672px;height:230px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:67px;color:#FFFFFF"><span style="font-size:67px;color:#FFFFFF"><b>Analytics Taxonomy &amp; the Data Lifecycle</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:413px;width:700px;height:106px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">Module 1 &middot; From data to decisions</span></p>
+</div>
+<div class="shp" style="left:62px;top:557px;width:192px;height:58px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#F5B041;">
+<p style="text-align:center"><span style="font-size:20px;color:#14213D"><b>BI &amp; decisions</b></span></p>
+</div>
+<div class="shp" style="left:274px;top:557px;width:192px;height:58px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#F5B041;">
+<p style="text-align:center"><span style="font-size:20px;color:#14213D"><b>The four analytics</b></span></p>
+</div>
+<div class="shp" style="left:485px;top:557px;width:192px;height:58px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#F5B041;">
+<p style="text-align:center"><span style="font-size:20px;color:#14213D"><b>Lifecycle &amp; framing</b></span></p>
+</div>
+<div class="shp" style="left:758px;top:192px;width:461px;height:310px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:782px;top:216px;width:413px;height:270px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px"><span style="font-family:'Courier New',monospace;font-size:27px;color:#8FA3C0"># data &mdash; 13,972 mess scans</span></p><p style="margin-bottom:11px"><span style="font-family:'Courier New',monospace;font-size:27px;color:#E8EEF8">&rarr; information &mdash; rush wait 120 s</span></p><p style="margin-bottom:11px"><span style="font-family:'Courier New',monospace;font-size:27px;color:#E8EEF8">&rarr; insight &mdash; 8 counters cannot keep up</span></p><p><span style="font-family:'Courier New',monospace;font-size:27px;color:#F5B041">&rarr; action &mdash; open the standby counter</span></p>
+</div>
+<div class="shp" style="left:62px;top:655px;width:500px;height:29px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center"><p style="font-size:19px;color:#8FA3C0"><span style="font-size:19px;color:#8FA3C0">Business Intelligence &amp; Data Visualization &middot; 26MB5210E</span></p></div>
+</section>
+<section class="slide" style="background:#FAF7F0">
+<div class="shp" style="left:62px;top:36px;width:1152px;height:36px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><span style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><b>ROADMAP</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:75px;width:1152px;height:91px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:56px;color:#14213D"><span style="font-size:56px;color:#14213D"><b>Module 1 in three parts</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:187px;width:366px;height:379px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:86px;top:206px;width:318px;height:341px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:3px;font-size:27px;color:#C2570C"><span style="margin-bottom:3px;font-size:27px;color:#C2570C"><b>COI1</b></span></p><p style="margin-bottom:11px;font-size:31px;color:#14213D"><span style="margin-bottom:11px;font-size:31px;color:#14213D"><b>BI &amp; decisions</b></span></p><p style="margin-bottom:8px"><span style="font-size:27px;color:#4A5568">The DIKW chain, the value chain and the four dashboard types</span></p>
+</div>
+<div class="shp" style="left:457px;top:187px;width:366px;height:379px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:481px;top:206px;width:318px;height:341px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:3px;font-size:27px;color:#C2570C"><span style="margin-bottom:3px;font-size:27px;color:#C2570C"><b>COI2</b></span></p><p style="margin-bottom:11px;font-size:31px;color:#14213D"><span style="margin-bottom:11px;font-size:31px;color:#14213D"><b>Analytics taxonomy &amp; the lifecycle</b></span></p><p style="margin-bottom:8px"><span style="font-size:27px;color:#4A5568">Descriptive, diagnostic, predictive, prescriptive &mdash; and data quality from source to insight</span></p>
+</div>
+<div class="shp" style="left:852px;top:187px;width:366px;height:379px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:876px;top:206px;width:318px;height:341px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:3px;font-size:27px;color:#C2570C"><span style="margin-bottom:3px;font-size:27px;color:#C2570C"><b>COI3</b></span></p><p style="margin-bottom:11px;font-size:31px;color:#14213D"><span style="margin-bottom:11px;font-size:31px;color:#14213D"><b>Framing the problem</b></span></p><p style="margin-bottom:8px"><span style="font-size:27px;color:#4A5568">Decision to question to KPI, stakeholders and MoSCoW</span></p>
+</div>
+<div class="shp" style="left:62px;top:667px;width:960px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:19px;color:#4A5568"><span style="font-size:19px;color:#4A5568">Module 1 &middot; From data to decisions</span></p>
+</div>
+<div class="shp" style="left:1150px;top:36px;width:64px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="text-align:right"><span style="font-size:19px;color:#4A5568">2</span></p>
+</div>
+</section>
+<section class="slide" style="background:#14213D">
+<div class="shp" style="left:62px;top:53px;width:1152px;height:38px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:4.0px;font-size:24px;color:#F5B041"><span style="letter-spacing:4.0px;font-size:24px;color:#F5B041"><b>CO1 / COI1</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:125px;width:1152px;height:134px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:75px;color:#FFFFFF"><span style="font-size:75px;color:#FFFFFF"><b>BI &amp; decisions</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:288px;width:1152px;height:53px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:37px;color:#F5B041"><span style="font-size:37px;color:#F5B041"><b>By the end of this lecture, students can:</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:355px;width:1152px;height:269px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:40px;color:#E8EEF8;text-align:left;">&#8226;</span><span style="font-size:40px;color:#FFFFFF">Explain how BI creates value, from a raw record to an action</span></p><p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:40px;color:#E8EEF8;text-align:left;">&#8226;</span><span style="font-size:40px;color:#FFFFFF">Trace the value chain and name where it usually breaks</span></p><p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:40px;color:#E8EEF8;text-align:left;">&#8226;</span><span style="font-size:40px;color:#FFFFFF">Match a dashboard type to its audience and rhythm</span></p>
+</div>
+</section>
+<section class="slide" style="background:#FAF7F0">
+<div class="shp" style="left:62px;top:36px;width:1152px;height:36px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><span style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><b>CO1 / COI1 / LECTURE 1 &middot; BI &amp; DECISIONS</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:75px;width:1152px;height:91px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:56px;color:#14213D"><span style="font-size:56px;color:#14213D"><b>BI turns data into decisions</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:197px;width:620px;height:400px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:16px;padding-left:24px;text-indent:-24px"><span style="display:inline-block;width:24px;font-size:25px;color:#C2570C;text-align:left;">&#8226;</span><span style="font-size:31px;color:#14213D"><b>Data:</b> raw facts &mdash; a scan record, a till receipt</span></p><p style="margin-bottom:16px;padding-left:24px;text-indent:-24px"><span style="display:inline-block;width:24px;font-size:25px;color:#C2570C;text-align:left;">&#8226;</span><span style="font-size:31px;color:#14213D"><b>Information:</b> data with context &mdash; waits up 22%</span></p><p style="margin-bottom:16px;padding-left:24px;text-indent:-24px"><span style="display:inline-block;width:24px;font-size:25px;color:#C2570C;text-align:left;">&#8226;</span><span style="font-size:31px;color:#14213D"><b>Insight:</b> the reason &mdash; the 12:30 rush beats 8 counters</span></p><p style="margin-bottom:16px;padding-left:24px;text-indent:-24px"><span style="display:inline-block;width:24px;font-size:25px;color:#C2570C;text-align:left;">&#8226;</span><span style="font-size:31px;color:#14213D"><b>Action:</b> the decision &mdash; open the standby counter</span></p>
+</div>
+<div class="shp" style="left:740px;top:197px;width:480px;height:400px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:764px;top:221px;width:432px;height:352px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:37px;color:#C2570C"><span style="margin-bottom:11px;font-size:37px;color:#C2570C"><b>In practice</b></span></p><p style="font-size:31px;color:#14213D"><span style="font-size:31px;color:#14213D">Walmart stocks ahead of storms &middot; Netflix ranks your first title &middot; Swiggy places riders ahead of demand &middot; banks spot missed EMIs early</span></p>
+</div>
+<div class="shp" style="left:62px;top:618px;width:620px;height:40px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:25px;color:#4A5568"><span style="font-size:25px;color:#4A5568">Value appears only when a decision changes &mdash; visibility, control, learning, foresight</span></p>
+</div>
+<div class="shp" style="left:62px;top:667px;width:960px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:19px;color:#4A5568"><span style="font-size:19px;color:#4A5568">Module 1 &middot; From data to decisions</span></p>
+</div>
+<div class="shp" style="left:1150px;top:36px;width:64px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="text-align:right"><span style="font-size:19px;color:#4A5568">4</span></p>
+</div>
+</section>
+<section class="slide" style="background:#FAF7F0">
+<div class="shp" style="left:62px;top:36px;width:1152px;height:36px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><span style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><b>CO1 / COI1 / LECTURE 1 &middot; THE VALUE CHAIN</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:75px;width:1152px;height:91px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:56px;color:#14213D"><span style="font-size:56px;color:#14213D"><b>From source to insight</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:210px;width:168px;height:58px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style="text-align:center"><span style="font-size:23px;color:#14213D"><b>Source systems</b></span></p>
+</div><div class="shp" style="left:238px;top:228px;width:34px;height:22px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center"><p style="text-align:center"><span style="font-size:26px;color:#C2570C"><b>&rarr;</b></span></p></div><div class="shp" style="left:272px;top:210px;width:148px;height:58px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style="text-align:center"><span style="font-size:23px;color:#14213D"><b>Ingestion</b></span></p>
+</div><div class="shp" style="left:428px;top:228px;width:34px;height:22px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center"><p style="text-align:center"><span style="font-size:26px;color:#C2570C"><b>&rarr;</b></span></p></div><div class="shp" style="left:462px;top:210px;width:170px;height:58px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style="text-align:center"><span style="font-size:23px;color:#14213D"><b>Store &amp; model</b></span></p>
+</div><div class="shp" style="left:640px;top:228px;width:34px;height:22px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center"><p style="text-align:center"><span style="font-size:26px;color:#C2570C"><b>&rarr;</b></span></p></div><div class="shp" style="left:674px;top:210px;width:200px;height:58px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style="text-align:center"><span style="font-size:23px;color:#14213D"><b>Prepare &amp; analyse</b></span></p>
+</div><div class="shp" style="left:882px;top:228px;width:34px;height:22px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center"><p style="text-align:center"><span style="font-size:26px;color:#C2570C"><b>&rarr;</b></span></p></div><div class="shp" style="left:916px;top:210px;width:170px;height:58px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style="text-align:center"><span style="font-size:23px;color:#14213D"><b>Decision &amp; action</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:292px;width:1152px;height:30px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:25px;color:#4A5568"><span style="font-size:25px;color:#4A5568">Outcomes feed back as new data &mdash; the loop is a chain, not a line</span></p>
+</div>
+<div class="shp" style="left:62px;top:350px;width:563px;height:270px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:86px;top:374px;width:515px;height:222px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:37px;color:#C2570C"><span style="margin-bottom:11px;font-size:37px;color:#C2570C"><b>Warehouse vs lake</b></span></p><p style="font-size:31px;color:#14213D"><span style="font-size:31px;color:#14213D">Warehouse: structured and curated &middot; Lake: raw and flexible &middot; both live under governance, security and India&#8217;s DPDP Act 2023</span></p>
+</div>
+<div class="shp" style="left:654px;top:350px;width:563px;height:270px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:678px;top:374px;width:515px;height:222px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:37px;color:#C2570C"><span style="margin-bottom:11px;font-size:37px;color:#C2570C"><b>Where the chain breaks</b></span></p><p style="font-size:31px;color:#14213D"><span style="font-size:31px;color:#14213D">One shopper, three IDs &middot; a nightly job that copies orders twice &middot; a join that double-counts sales &middot; a dashboard nobody acts on</span></p>
+</div>
+<div class="shp" style="left:62px;top:667px;width:960px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:19px;color:#4A5568"><span style="font-size:19px;color:#4A5568">Module 1 &middot; From data to decisions</span></p>
+</div>
+<div class="shp" style="left:1150px;top:36px;width:64px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="text-align:right"><span style="font-size:19px;color:#4A5568">5</span></p>
+</div>
+</section>
+<section class="slide" style="background:#FAF7F0">
+<div class="shp" style="left:62px;top:36px;width:1152px;height:36px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><span style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><b>CO1 / COI1 / LECTURE 1 &middot; DASHBOARDS</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:75px;width:1152px;height:91px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:56px;color:#14213D"><span style="font-size:56px;color:#14213D"><b>Four dashboard types</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:197px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;border-radius:34px;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div><div class="shp" style="left:86px;top:216px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>Strategic</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">CEO and board &middot; quarterly &middot; 5&ndash;10 KPIs</span></p>
+</div>
+<div class="shp" style="left:654px;top:197px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;border-radius:61px;border:1.50px solid #E3DFD3;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div><div class="shp" style="left:678px;top:216px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#C2570C"><span style="margin-bottom:11px;font-size:43px;color:#C2570C"><b>Tactical</b></span></p><p style="font-size:35px;color:#14213D"><span style="font-size:35px;color:#14213D">Department heads &middot; weekly &middot; drill-down</span></p>
+</div>
+<div class="shp" style="left:62px;top:432px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;border-radius:34px;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div><div class="shp" style="left:86px;top:451px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>Operational</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">Supervisors &middot; real time &middot; alerts</span></p>
+</div>
+<div class="shp" style="left:654px;top:432px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;border-radius:61px;border:1.50px solid #E3DFD3;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div><div class="shp" style="left:678px;top:451px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#C2570C"><span style="margin-bottom:11px;font-size:43px;color:#C2570C"><b>Analytical</b></span></p><p style="font-size:35px;color:#14213D"><span style="font-size:35px;color:#14213D">Analysts &middot; on demand &middot; explore</span></p>
+</div>
+<div class="shp" style="left:62px;top:655px;width:1152px;height:30px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:25px;color:#4A5568"><span style="font-size:25px;color:#4A5568">Avoid: one dashboard for everyone &middot; too many KPIs &middot; numbers without targets &middot; real-time data for a monthly decision</span></p>
+</div>
+<div class="shp" style="left:62px;top:667px;width:960px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:19px;color:#4A5568"><span style="font-size:19px;color:#4A5568">Module 1 &middot; From data to decisions</span></p>
+</div>
+<div class="shp" style="left:1150px;top:36px;width:64px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="text-align:right"><span style="font-size:19px;color:#4A5568">6</span></p>
+</div>
+</section>
+<section class="slide" style="background:#F5B041">
+<div class="shp" style="left:62px;top:36px;width:1152px;height:36px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:2.7px;font-size:24px;color:#14213D"><span style="letter-spacing:2.7px;font-size:24px;color:#14213D"><b>ACTIVITY &middot; 10 MINUTES</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:75px;width:1152px;height:91px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:61px;color:#14213D"><span style="font-size:61px;color:#14213D"><b>The sorter</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:192px;width:701px;height:451px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:21px"><span style="font-size:33px;color:#14213D">&#8226; Sort five statements: data, information, insight or action</span></p><p style="margin-bottom:21px"><span style="font-size:33px;color:#14213D">&#8226; Pick one statement and say who would act on it, and when</span></p><p style="margin-bottom:21px"><span style="font-size:33px;color:#14213D">&#8226; Name the dashboard type for a factory screen and a board pack</span></p>
+</div>
+<div class="shp" style="left:797px;top:192px;width:420px;height:326px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:826px;top:216px;width:365px;height:278px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:13px;font-size:40px;color:#C2570C"><span style="margin-bottom:13px;font-size:40px;color:#C2570C"><b>Stretch goal</b></span></p><p style="font-size:35px;color:#14213D"><span style="font-size:35px;color:#14213D">Which of the four is missing from a place you know?</span></p>
+</div>
+</section>
+<section class="slide" style="background:#14213D">
+<div class="shp" style="left:62px;top:36px;width:1152px;height:36px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:2.7px;font-size:24px;color:#F5B041"><span style="letter-spacing:2.7px;font-size:24px;color:#F5B041"><b>CO1 / COI1 / LECTURE 1 &middot; RECAP</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:75px;width:1152px;height:91px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:56px;color:#FFFFFF"><span style="font-size:56px;color:#FFFFFF"><b>What we covered</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:197px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:654px;top:197px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:62px;top:432px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:654px;top:432px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:86px;top:216px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>DIKW</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">data &rarr; information &rarr; insight &rarr; action</span></p>
+</div>
+<div class="shp" style="left:678px;top:216px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>Value chain</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">source to decision, with feedback</span></p>
+</div>
+<div class="shp" style="left:86px;top:451px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>Dashboard types</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">strategic, tactical, operational, analytical</span></p>
+</div>
+<div class="shp" style="left:678px;top:451px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>Decision first</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">value only when a decision changes</span></p>
+</div>
+<div class="shp" style="left:1150px;top:36px;width:64px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="text-align:right"><span style="font-size:19px;color:#8FA3C0">8</span></p>
+</div>
+<div class="shp" style="left:601px;top:667px;width:618px;height:29px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start"><p style=""><span style="letter-spacing:0.9px;font-size:19px;color:#F5B041;text-align:right;width:100%">Next: COI2 &mdash; Analytics taxonomy &amp; the data lifecycle</span></p></div>
+</section>
+<section class="slide" style="background:#14213D">
+<div class="shp" style="left:62px;top:53px;width:1152px;height:38px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:4.0px;font-size:24px;color:#F5B041"><span style="letter-spacing:4.0px;font-size:24px;color:#F5B041"><b>CO1 / COI2</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:125px;width:1152px;height:134px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:75px;color:#FFFFFF"><span style="font-size:75px;color:#FFFFFF"><b>Analytics taxonomy &amp; the data lifecycle</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:288px;width:1152px;height:53px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:37px;color:#F5B041"><span style="font-size:37px;color:#F5B041"><b>By the end of this lecture, students can:</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:355px;width:1152px;height:269px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:40px;color:#E8EEF8;text-align:left;">&#8226;</span><span style="font-size:40px;color:#FFFFFF">Classify any question: descriptive, diagnostic, predictive, prescriptive</span></p><p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:40px;color:#E8EEF8;text-align:left;">&#8226;</span><span style="font-size:40px;color:#FFFFFF">Follow the data lifecycle from source to insight</span></p><p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:40px;color:#E8EEF8;text-align:left;">&#8226;</span><span style="font-size:40px;color:#FFFFFF">Spot a data-quality fault before it reaches the dashboard</span></p>
+</div>
+</section>
+<section class="slide" style="background:#FAF7F0">
+<div class="shp" style="left:62px;top:36px;width:1152px;height:36px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><span style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><b>CO1 / COI2 / LECTURE 2 &middot; ANALYTICS TYPES</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:75px;width:1152px;height:91px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:56px;color:#14213D"><span style="font-size:56px;color:#14213D"><b>Four kinds of questions</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:197px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;border-radius:34px;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div><div class="shp" style="left:86px;top:216px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>Descriptive</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">What happened? &middot; reports, KPIs</span></p>
+</div>
+<div class="shp" style="left:654px;top:197px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;border-radius:61px;border:1.50px solid #E3DFD3;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div><div class="shp" style="left:678px;top:216px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#C2570C"><span style="margin-bottom:11px;font-size:43px;color:#C2570C"><b>Diagnostic</b></span></p><p style="font-size:35px;color:#14213D"><span style="font-size:35px;color:#14213D">Why? &middot; drill-down, driver trees</span></p>
+</div>
+<div class="shp" style="left:62px;top:432px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;border-radius:34px;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div><div class="shp" style="left:86px;top:451px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>Predictive</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">What is likely? &middot; forecasts, risk scores</span></p>
+</div>
+<div class="shp" style="left:654px;top:432px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;border-radius:61px;border:1.50px solid #E3DFD3;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div><div class="shp" style="left:678px;top:451px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#C2570C"><span style="margin-bottom:11px;font-size:43px;color:#C2570C"><b>Prescriptive</b></span></p><p style="font-size:35px;color:#14213D"><span style="font-size:35px;color:#14213D">What should we do? &middot; optimised actions</span></p>
+</div>
+<div class="shp" style="left:62px;top:667px;width:960px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:19px;color:#4A5568"><span style="font-size:19px;color:#4A5568">Module 1 &middot; From data to decisions</span></p>
+</div>
+<div class="shp" style="left:1150px;top:36px;width:64px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="text-align:right"><span style="font-size:19px;color:#4A5568">10</span></p>
+</div>
+</section>
+<section class="slide" style="background:#FAF7F0">
+<div class="shp" style="left:62px;top:36px;width:1152px;height:36px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><span style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><b>CO1 / COI2 / LECTURE 2 &middot; THE DATA LIFECYCLE</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:75px;width:1152px;height:91px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:56px;color:#14213D"><span style="font-size:56px;color:#14213D"><b>Preparing data for BI</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:197px;width:700px;height:420px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:38px;color:#C2570C;text-align:left;">&#8226;</span><span style="font-size:38px;color:#14213D"><b>Create, store, prepare, use, share, archive, delete</b> &mdash; each step has an owner</span></p><p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:38px;color:#C2570C;text-align:left;">&#8226;</span><span style="font-size:38px;color:#14213D">Governance, security and quality run through every step (DPDP Act 2023)</span></p><p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:38px;color:#C2570C;text-align:left;">&#8226;</span><span style="font-size:38px;color:#14213D">Connect and model sources: one fact table, clean dimensions, a clear grain</span></p><p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:38px;color:#C2570C;text-align:left;">&#8226;</span><span style="font-size:38px;color:#14213D">Profile and clean before BI: missing values, duplicates, invalid types, inconsistent entries</span></p>
+</div>
+<div class="shp" style="left:826px;top:197px;width:392px;height:300px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:850px;top:221px;width:344px;height:252px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:37px;color:#C2570C"><span style="margin-bottom:11px;font-size:37px;color:#C2570C"><b>One line each</b></span></p><p style="font-size:29px;color:#14213D"><span style="font-size:29px;color:#14213D">Warehouse = curated &middot; Lake = raw &middot; Semantic layer = shared definitions &middot; Data quality = a job, not a step</span></p>
+</div>
+<div class="shp" style="left:62px;top:667px;width:960px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:19px;color:#4A5568"><span style="font-size:19px;color:#4A5568">Module 1 &middot; From data to decisions</span></p>
+</div>
+<div class="shp" style="left:1150px;top:36px;width:64px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="text-align:right"><span style="font-size:19px;color:#4A5568">11</span></p>
+</div>
+</section>
+<section class="slide" style="background:#F5B041">
+<div class="shp" style="left:62px;top:36px;width:1152px;height:36px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:2.7px;font-size:24px;color:#14213D"><span style="letter-spacing:2.7px;font-size:24px;color:#14213D"><b>ACTIVITY &middot; 15 MINUTES</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:75px;width:1152px;height:91px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:61px;color:#14213D"><span style="font-size:61px;color:#14213D"><b>Classify the question</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:192px;width:701px;height:451px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:21px"><span style="font-size:33px;color:#14213D">&#8226; How many students ate lunch in weeks 7&ndash;8?</span></p><p style="margin-bottom:21px"><span style="font-size:33px;color:#14213D">&#8226; Why is the 12:30 slot the worst?</span></p><p style="margin-bottom:21px"><span style="font-size:33px;color:#14213D">&#8226; How many will arrive at 12:45 next Wednesday?</span></p><p style="margin-bottom:21px"><span style="font-size:33px;color:#14213D">&#8226; Should the standby counter open at 12:40?</span></p>
+</div>
+<div class="shp" style="left:797px;top:192px;width:420px;height:326px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:826px;top:216px;width:365px;height:278px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:13px;font-size:40px;color:#C2570C"><span style="margin-bottom:13px;font-size:40px;color:#C2570C"><b>Stretch goal</b></span></p><p style="font-size:35px;color:#14213D"><span style="font-size:35px;color:#14213D">Name the analytics type of each &mdash; then write one of each about your own place</span></p>
+</div>
+</section>
+<section class="slide" style="background:#14213D">
+<div class="shp" style="left:62px;top:36px;width:1152px;height:36px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:2.7px;font-size:24px;color:#F5B041"><span style="letter-spacing:2.7px;font-size:24px;color:#F5B041"><b>CO1 / COI2 / LECTURE 2 &middot; RECAP</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:75px;width:1152px;height:91px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:56px;color:#FFFFFF"><span style="font-size:56px;color:#FFFFFF"><b>What we covered</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:197px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:654px;top:197px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:62px;top:432px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:654px;top:432px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:86px;top:216px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>Four types</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">what happened &rarr; why &rarr; what next &rarr; what to do</span></p>
+</div>
+<div class="shp" style="left:678px;top:216px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>Lifecycle</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">create to archive, governed and quality-checked</span></p>
+</div>
+<div class="shp" style="left:86px;top:451px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>Warehouse vs lake</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">curated and structured vs raw and flexible</span></p>
+</div>
+<div class="shp" style="left:678px;top:451px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>Quality first</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">profile, clean, model before you chart</span></p>
+</div>
+<div class="shp" style="left:1150px;top:36px;width:64px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="text-align:right"><span style="font-size:19px;color:#8FA3C0">13</span></p>
+</div>
+<div class="shp" style="left:601px;top:667px;width:618px;height:29px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start"><p style=""><span style="letter-spacing:0.9px;font-size:19px;color:#F5B041;text-align:right;width:100%">Next: COI3 &mdash; Framing the problem a dashboard must answer</span></p></div>
+</section>
+<section class="slide" style="background:#14213D">
+<div class="shp" style="left:62px;top:53px;width:1152px;height:38px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:4.0px;font-size:24px;color:#F5B041"><span style="letter-spacing:4.0px;font-size:24px;color:#F5B041"><b>CO1 / COI3</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:125px;width:1152px;height:134px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:75px;color:#FFFFFF"><span style="font-size:75px;color:#FFFFFF"><b>Framing the problem a dashboard must answer</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:288px;width:1152px;height:53px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:37px;color:#F5B041"><span style="font-size:37px;color:#F5B041"><b>By the end of this lecture, students can:</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:355px;width:1152px;height:269px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:40px;color:#E8EEF8;text-align:left;">&#8226;</span><span style="font-size:40px;color:#FFFFFF">Work backwards from the decision to question, metric, data</span></p><p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:40px;color:#E8EEF8;text-align:left;">&#8226;</span><span style="font-size:40px;color:#FFFFFF">Define a KPI: formula, unit, grain, source, owner, target</span></p><p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:40px;color:#E8EEF8;text-align:left;">&#8226;</span><span style="font-size:40px;color:#FFFFFF">Rank requirements with MoSCoW after the stakeholder interviews</span></p>
+</div>
+</section>
+<section class="slide" style="background:#FAF7F0">
+<div class="shp" style="left:62px;top:36px;width:1152px;height:36px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><span style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><b>CO1 / COI3 / LECTURE 3 &middot; FRAMING</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:75px;width:1152px;height:91px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:56px;color:#14213D"><span style="font-size:56px;color:#14213D"><b>Work backwards from the decision</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:197px;width:1152px;height:70px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="text-align:center"><span style="font-size:40px;color:#14213D"><b>Decision &rarr; business question &rarr; metric &rarr; data requirement &rarr; visual</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:262px;width:1152px;height:40px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:27px;color:#4A5568"><span style="font-size:27px;color:#4A5568">Start from the decision, not from the data &mdash; work backwards</span></p>
+</div>
+<div class="shp" style="left:62px;top:330px;width:563px;height:300px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:86px;top:354px;width:515px;height:252px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:37px;color:#C2570C"><span style="margin-bottom:11px;font-size:37px;color:#C2570C"><b>A KPI is complete when it has</b></span></p><p style="font-size:31px;color:#14213D"><span style="font-size:31px;color:#14213D">name &middot; formula &middot; unit &middot; time grain &middot; source &middot; owner &middot; target</span></p>
+</div>
+<div class="shp" style="left:654px;top:330px;width:563px;height:300px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:678px;top:354px;width:515px;height:252px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:37px;color:#C2570C"><span style="margin-bottom:11px;font-size:37px;color:#C2570C"><b>SMART-D</b></span></p><p style="font-size:31px;color:#14213D"><span style="font-size:31px;color:#14213D">Specific &middot; Measurable &middot; Actionable &middot; Relevant &middot; Time-bound &middot; Data-available &mdash; if a number cannot be obtained, it is not a KPI</span></p>
+</div>
+<div class="shp" style="left:62px;top:667px;width:960px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:19px;color:#4A5568"><span style="font-size:19px;color:#4A5568">Module 1 &middot; From data to decisions</span></p>
+</div>
+<div class="shp" style="left:1150px;top:36px;width:64px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="text-align:right"><span style="font-size:19px;color:#4A5568">15</span></p>
+</div>
+</section>
+<section class="slide" style="background:#FAF7F0">
+<div class="shp" style="left:62px;top:36px;width:1152px;height:36px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><span style="letter-spacing:2.7px;font-size:24px;color:#C2570C"><b>CO1 / COI3 / LECTURE 3 &middot; STAKEHOLDERS</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:75px;width:1152px;height:91px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:56px;color:#14213D"><span style="font-size:56px;color:#14213D"><b>People before charts</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:197px;width:560px;height:430px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:37px;color:#C2570C"><span style="margin-bottom:11px;font-size:37px;color:#C2570C"><b>Who is in the room</b></span></p><p style="margin-bottom:19px;font-size:31px;color:#14213D"><span style="margin-bottom:19px;font-size:31px;color:#14213D">Sponsor &middot; business owner &middot; end users &middot; data stewards &middot; IT &middot; finance &middot; compliance</span></p><p style="font-size:31px;color:#14213D"><span style="font-size:31px;color:#14213D">Power&ndash;interest grid: manage sponsors and owners closely; keep finance satisfied; keep users informed and consulted</span></p>
+</div>
+<div class="shp" style="left:664px;top:197px;width:553px;height:430px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:688px;top:221px;width:505px;height:382px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:37px;color:#C2570C"><span style="margin-bottom:11px;font-size:37px;color:#C2570C"><b>MoSCoW, mess rules</b></span></p><p style="margin-bottom:11px"><span style="font-size:29px;color:#C2570C"><b>M &middot; Must</b></span><span style="font-size:29px;color:#14213D"> &mdash; a lunch-time decision and the data exist</span></p><p style="margin-bottom:11px"><span style="font-size:29px;color:#C2570C"><b>S &middot; Should</b></span><span style="font-size:29px;color:#14213D"> &mdash; a decision after lunch and the data exist</span></p><p style="margin-bottom:11px"><span style="font-size:29px;color:#C2570C"><b>C &middot; Could</b></span><span style="font-size:29px;color:#14213D"> &mdash; no decision named yet</span></p><p style="margin-bottom:11px"><span style="font-size:29px;color:#C2570C"><b>W &middot; Won&rsquo;t</b></span><span style="font-size:29px;color:#14213D"> &mdash; the data do not exist</span></p>
+</div>
+<div class="shp" style="left:62px;top:667px;width:960px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:19px;color:#4A5568"><span style="font-size:19px;color:#4A5568">Module 1 &middot; From data to decisions</span></p>
+</div>
+<div class="shp" style="left:1150px;top:36px;width:64px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="text-align:right"><span style="font-size:19px;color:#4A5568">16</span></p>
+</div>
+</section>
+<section class="slide" style="background:#F5B041">
+<div class="shp" style="left:62px;top:36px;width:1152px;height:36px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:2.7px;font-size:24px;color:#14213D"><span style="letter-spacing:2.7px;font-size:24px;color:#14213D"><b>ACTIVITY &middot; 15 MINUTES</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:75px;width:1152px;height:91px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:61px;color:#14213D"><span style="font-size:61px;color:#14213D"><b>From request to KPI</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:192px;width:701px;height:451px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:21px"><span style="font-size:33px;color:#14213D">&#8226; The manager says: &ldquo;Give me a sales dashboard.&rdquo;</span></p><p style="margin-bottom:21px"><span style="font-size:33px;color:#14213D">&#8226; Write the decision behind the request</span></p><p style="margin-bottom:21px"><span style="font-size:33px;color:#14213D">&#8226; One business question, and one KPI with formula, unit, grain, source and owner</span></p><p style="margin-bottom:21px"><span style="font-size:33px;color:#14213D">&#8226; Rank three more requests: Must, Should or Could</span></p>
+</div>
+<div class="shp" style="left:797px;top:192px;width:420px;height:326px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#FFFFFF;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:826px;top:216px;width:365px;height:278px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:13px;font-size:40px;color:#C2570C"><span style="margin-bottom:13px;font-size:40px;color:#C2570C"><b>Stretch goal</b></span></p><p style="font-size:35px;color:#14213D"><span style="font-size:35px;color:#14213D">Find one vanity metric in any dashboard you know</span></p>
+</div>
+</section>
+<section class="slide" style="background:#14213D">
+<div class="shp" style="left:62px;top:36px;width:1152px;height:36px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:2.7px;font-size:24px;color:#F5B041"><span style="letter-spacing:2.7px;font-size:24px;color:#F5B041"><b>CO1 / COI3 / LECTURE 3 &middot; RECAP</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:75px;width:1152px;height:91px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:56px;color:#FFFFFF"><span style="font-size:56px;color:#FFFFFF"><b>What we covered</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:197px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:654px;top:197px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:62px;top:432px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:654px;top:432px;width:563px;height:206px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;">
+<p style=""><span style="font-size:24px">&#8203;</span></p>
+</div>
+<div class="shp" style="left:86px;top:216px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>Decision first</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">decision &rarr; question &rarr; metric &rarr; data &rarr; visual</span></p>
+</div>
+<div class="shp" style="left:678px;top:216px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>KPI anatomy</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">formula, unit, grain, source, owner, target</span></p>
+</div>
+<div class="shp" style="left:86px;top:451px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>Stakeholders</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">interviews, personas, the power&ndash;interest grid</span></p>
+</div>
+<div class="shp" style="left:678px;top:451px;width:515px;height:168px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:11px;font-size:43px;color:#F5B041"><span style="margin-bottom:11px;font-size:43px;color:#F5B041"><b>MoSCoW</b></span></p><p style="font-size:35px;color:#E8EEF8"><span style="font-size:35px;color:#E8EEF8">rank by decision and by data that exists</span></p>
+</div>
+<div class="shp" style="left:1150px;top:36px;width:64px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="text-align:right"><span style="font-size:19px;color:#8FA3C0">18</span></p>
+</div>
+<div class="shp" style="left:601px;top:667px;width:618px;height:29px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start"><p style=""><span style="letter-spacing:0.9px;font-size:19px;color:#F5B041;text-align:right;width:100%">Next: Labs 1.1&ndash;1.3 &mdash; the Guild mess, in your browser</span></p></div>
+</section>
+<section class="slide" style="background:#14213D">
+<div class="shp" style="left:62px;top:36px;width:1152px;height:36px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="letter-spacing:2.7px;font-size:24px;color:#F5B041"><span style="letter-spacing:2.7px;font-size:24px;color:#F5B041"><b>CO1 CHECKLIST</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:75px;width:1152px;height:91px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="font-size:56px;color:#FFFFFF"><span style="font-size:56px;color:#FFFFFF"><b>I can now...</b></span></p>
+</div>
+<div class="shp" style="left:62px;top:192px;width:1155px;height:307px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:40px;color:#E8EEF8;text-align:left;">&#8226;</span><span style="font-size:40px;color:#FFFFFF">Explain the BI value chain from source to action</span></p><p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:40px;color:#E8EEF8;text-align:left;">&#8226;</span><span style="font-size:40px;color:#FFFFFF">Classify a question as descriptive, diagnostic, predictive or prescriptive</span></p><p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:40px;color:#E8EEF8;text-align:left;">&#8226;</span><span style="font-size:40px;color:#FFFFFF">Follow the data lifecycle and flag quality and preparation issues</span></p><p style="margin-bottom:19px;padding-left:36px;text-indent:-36px"><span style="display:inline-block;width:36px;font-size:40px;color:#E8EEF8;text-align:left;">&#8226;</span><span style="font-size:40px;color:#FFFFFF">Frame a dashboard: decision, question, KPI, data requirement and audience</span></p>
+</div>
+<div class="shp" style="left:62px;top:514px;width:1155px;height:115px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;background:#1F2F55;">
+<p style=""><span style="font-size:37px;color:#F5B041"><b>Homework: </b></span><span style="font-size:37px;color:#FFFFFF">open the interactive dashboard, do one activity from each part and submit your report.</span></p>
+</div>
+<div class="shp" style="left:1150px;top:36px;width:64px;height:29px;padding:0px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;">
+<p style="text-align:right"><span style="font-size:19px;color:#8FA3C0">19</span></p>
+</div>
+<div class="shp" style="left:601px;top:667px;width:618px;height:29px;position:absolute;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start"><p style=""><span style="letter-spacing:0.9px;font-size:19px;color:#F5B041;text-align:right;width:100%">Next: Labs 1.1&ndash;1.3 &mdash; the Guild mess, in your browser</span></p></div>
+</section>
+    </div>
+  </div>
+  <div class="nav">
+    <button id="prev" aria-label="Previous">&#8249;</button>
+    <span class="count" id="count"></span>
+    <button id="next" aria-label="Next">&#8250;</button>
+    <div class="hint"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> turn &middot; <kbd>F</kbd> fullscreen &middot; tap the slide or swipe</div>
+  </div>
+</div>
 <script>
-const $=s=>document.querySelector(s);
-const tabs=[
-{n:"1 · BI & decisions",ti:"DIKW sorter",pr:"Choose one statement from the sorter. In 3 to 4 sentences, explain how it moves from data to information to insight to action, and who would act on it.",how:"Classify each statement as data, information, insight or action.",
-th:`<p><b>BI</b> turns data into information people can act on, so the right person decides better and on time. Value appears only when a decision changes.</p><ul><li><b>Data</b>: raw facts (a till record)</li><li><b>Information</b>: data with context (sales up 22%)</li><li><b>Insight</b>: the reason (match days)</li><li><b>Action</b>: the decision (stock more snacks)</li></ul><p><b>Four purposes:</b> visibility, control, learning, foresight.</p><p class="app"><b>In practice:</b> Walmart stocks ahead of storms using sales and weather data; Netflix chooses which title each member sees first; banks spot missed EMIs early; Swiggy and Zomato place riders ahead of demand.</p>`,
-o:["Data","Information","Insight","Action"],
-qs:[["Order #8821 was delivered at 19:42.",0,"A single raw record with no context."],["Average delivery time rose from 31 to 38 minutes this week.",1,"Data summarised and compared with context."],["Delivery time rises when rain slows riders in two zones.",2,"It explains why, so it is an insight."],["Add riders in those two zones when rain is forecast.",3,"A decision that changes what the business does."],["Store 112 sold 1,840 units last week, up 22%.",1,"A summarised, contextualised figure."]]},
-{n:"2 · Analytics types",ti:"Classify the question",pr:"Pick one question you classified. Explain why it belongs to that analytics type and what a manager could do with the answer.",how:"Decide which analytics type each question needs.",
-th:`<table><tr><th>Type</th><th>Question</th><th>Output</th></tr><tr><td>Descriptive</td><td>What happened?</td><td>Reports, KPIs</td></tr><tr><td>Diagnostic</td><td>Why?</td><td>Drill-down, driver trees</td></tr><tr><td>Predictive</td><td>What is likely?</td><td>Forecasts, risk scores</td></tr><tr><td>Prescriptive</td><td>What should we do?</td><td>Optimised actions</td></tr></table><p>Example: revenue fell 10.2% (descriptive); a ₹99 app promotion shifted the mix to small baskets (diagnostic); a churn model scores customer B at 71% (predictive); UPS-style routing picks the best route plan (prescriptive).</p><p class="app"><b>In practice:</b> Reliance Retail sales reviews, Zara sell-out analysis, telecom churn models, airline dynamic pricing.</p>`,
-o:["Descriptive","Diagnostic","Predictive","Prescriptive"],
-qs:[["How many credit-card applications did we receive last quarter?",0,"A count of past events."],["Why did approvals drop in the southern region?",1,"It asks for causes."],["How many applications will we receive in the festive quarter?",2,"It estimates a future value."],["How should we split the marketing budget across cities to maximise approvals?",3,"It asks for the best action under constraints."],["Which branch has the highest loan-default rate?",0,"A ranking of past results."],["Which open customers are most likely to leave next month?",2,"A probability about the future."]]},
-{n:"3 · Value chain",ti:"Where did the chain break?",pr:"Describe one stage where the value chain can break. Give an example and explain how it would damage the final decision.",how:"Each scenario describes a failure. Pick the stage where the fix belongs.",
-th:`<p><b>Chain:</b> source systems → ingestion → storage and integration → preparation and modelling → analysis and visualisation → decision → action, with outcomes feeding back as new data.</p><p><b>Lifecycle:</b> create, store, prepare, use, share, archive, delete, under governance, security (India’s DPDP Act 2023) and quality.</p><p><b>Warehouse</b>: structured and curated. <b>Lake</b>: raw and flexible.</p><p class="app"><b>In practice:</b> Starbucks links till, app and location data to store and offer decisions; Tata Steel uses sensor data to schedule maintenance; a university links ERP data to counsellor alerts.</p>`,
-o:["Source systems","Ingestion","Preparation and modelling","Analysis and visualisation","Decision and action"],
-qs:[["The same shopper appears with three IDs across POS, web and the loyalty app.",0,"Different systems record identity differently at the source."],["A nightly job copied the same orders twice.",1,"Duplicate loads are an ingestion fault."],["A join between orders and returns double counts sales.",2,"Wrong joins are a modelling error."],["A cluttered chart hides the trend managers need.",3,"A presentation problem."],["The dashboard is viewed daily but nobody changes anything.",4,"The metric is not tied to a decision or an owner."]]},
-{n:"4 · Dashboards",ti:"Match the dashboard",pr:"Think of a dashboard you have seen (an app, a bank, a delivery tracker). Which type is it, who uses it and how often? Why is that type the right one?",how:"Choose the best dashboard type for each situation.",
-th:`<table><tr><th></th><th>Audience</th><th>Rhythm</th></tr><tr><td>Strategic</td><td>CEO, board</td><td>Quarterly, 5-10 KPIs</td></tr><tr><td>Tactical</td><td>Department heads</td><td>Weekly, drill-down</td></tr><tr><td>Operational</td><td>Supervisors</td><td>Real time, alerts</td></tr><tr><td>Analytical</td><td>Analysts</td><td>On demand, explore</td></tr></table><p>Avoid one dashboard for everyone, too many KPIs, numbers without targets, and real-time data for monthly decisions.</p><p class="app"><b>In practice:</b> a bank’s executive scorecard (NIM, NPA), an FMCG regional quota view, Swiggy’s live zone map, a category manager’s margin explorer.</p>`,
-o:["Strategic","Tactical","Operational","Analytical"],
-qs:[["A factory screen shows machine status in red, amber and green, refreshed every minute.",2,"Live status and alerts."],["A board pack page shows seven KPIs against annual targets.",0,"Few KPIs, long horizon, senior audience."],["A finance analyst filters margin by product, customer and region to find drivers.",3,"Exploration with rich filters."],["A zonal head reviews branch results against monthly targets and drills into weak branches.",1,"Comparison with plan and drill-down."],["A call-centre supervisor must know right now if the queue is too long.",2,"Immediate action on live data."]]},
-{n:"5 · Framing questions",ti:"From request to KPI",pr:"A manager asks you for “a dashboard on sales”. Write the decision behind it, one business question, and one KPI with its formula, unit and owner.",how:"A marketing head asks for “a dashboard on social media”. Work backwards from the decision.",
-th:`<p><b>Chain:</b> decision → business question → metric → data requirement → visual. Start from the decision, not the data.</p><p>A KPI needs a name, formula, unit, time grain, source, owner and target. Use <b>SMART-D</b>: specific, measurable, actionable, relevant, time-bound, data-available.</p><p>Example: “why are we losing deals?” becomes win rate by segment, loss stage and reason, and at-risk deals, and exposes that loss reason must be captured in the CRM.</p><p class="app"><b>In practice:</b> store expansion, collections calling order, machine maintenance timing and student early-warning all start from a named decision.</p>`,
-o:null,
-qs:[["Which is a real decision?",["Build a social media dashboard","Decide by 30 November how to split ₹20 lakh of ad budget across channels","Improve engagement","Analyse our followers"],1,"It has an owner, a deadline and a choice with money attached."],["Which business question best supports that decision?",["How many followers do we have?","Which channels give the lowest cost per qualified lead?","What do customers think of us?","Is social media popular?"],1,"It is specific, measurable and changes the budget split."],["Which KPI definition is complete?",["Engagement","Likes per post","Cost per qualified lead = channel spend ÷ qualified leads, in ₹, monthly, from ad platform and CRM, owned by the Digital Marketing Manager","Follower growth"],2,"It names formula, unit, grain, source and owner."],["Which is most likely a vanity metric?",["Page views","Repeat purchase rate","Cost per qualified lead","90-day churn"],0,"It looks good but drives no decision."]]},
-{n:"6 · Stakeholders",ti:"Requirements practice",pr:"A stakeholder asks you to add a new chart. Explain how you would find the decision behind the request and which MoSCoW priority you would give it, and why.",how:"Handle stakeholders and requirements as a BI analyst would.",
-th:`<p><b>Stakeholders:</b> sponsor, business owner, end users, data stewards, IT, finance, compliance.</p><p><b>Power-interest grid:</b> manage sponsors and owners closely, keep finance satisfied, keep end users informed and consulted.</p><p><b>Personas:</b> Ritu (CFO, strategic), Arjun (regional manager, tactical and operational), Meera (analyst, analytical).</p><p><b>Methods:</b> interviews, workshops, shadowing, document review, data profiling, prototypes. Write user stories with acceptance criteria and rank with MoSCoW.</p><p class="app"><b>In practice:</b> a hospital group engaged compliance early because it held a veto; a university counsellor persona produced a “who to call first” view.</p>`,
-o:null,
-qs:[["The CFO controls budget but rarely uses the tool. Best engagement style?",["Manage closely","Keep satisfied","Keep informed and consult","Ignore"],1,"High power, low interest."],["A manager says “add a map”. Best first response?",["Add it","Ask what decision the map will support","Refuse","Ask IT"],1,"Requests hide needs; start from the decision."],["Which question best uncovers the decision behind a request?",["Which colours do you prefer?","What would you do differently with this information?","How many charts?","Which tool?"],1,"It links information to action."],["MoSCoW: “Margin must reconcile to the ledger within 0.1% or the CFO will not trust it.”",["Must","Should","Could","Won’t"],0,"The solution fails without trust."],["MoSCoW: “Alert when a store falls 20% below forecast; nice to have this release.”",["Must","Should","Could","Won’t"],2,"Valuable but optional."]]},
-{n:"7 · Data to decision",sim:1,ti:"The bakery: how many cakes to bake?",sp:["Step 1 (data): What does last week's data show about daily sales?","Step 2 (information): What pattern did you find, and why does it matter to the owner?","Step 3 (decision): What quantities did you choose, why, and what was the result?"],pr:"In your own words: what pattern did the data show, what quantities did you decide to bake, and how much better was it than the gut feeling? Name one risk of relying only on past data.",how:"A small bakery must decide every day how many cakes to bake. Follow the three steps and see what changes when the decision uses data.",
-th:`<p>Data is useful only when it helps someone <b>make a better decision</b>. The path is the same one you met in tab 1:</p><ul><li><b>Data</b>: what happened last week (cakes sold each day)</li><li><b>Information</b>: the pattern (weekends sell about double)</li><li><b>Decision</b>: how many to bake on each kind of day</li><li><b>Result</b>: more profit, less waste</li></ul><p><b>The case:</b> Sri Sai Bakery makes a cake for ₹60 and sells it for ₹100. A cake not sold by evening is thrown away. Bake too few and you lose sales. Bake too many and you waste money.</p><p><b>Before data:</b> the owner bakes 30 cakes every day, by gut feeling.</p><p class=\"app\"><b>In practice:</b> the same idea runs sweet shops, hotel kitchens, canteens and Swiggy Instamart dark stores: look at past sales, find the pattern, decide the quantity.</p>`},
-{n:"8 · Submission",sub:1,ti:"Submission",pr:"",th:""}
-];
-let S={},Q={},D={wd:30,we:30},cur=0;
-const NT=7;
-try{const z=JSON.parse(localStorage.getItem("bidv.co1")||"{}");S=z.S||{};Q=z.Q||{};D=z.D||D;if(z.n)$("#sn").value=z.n;if(z.i)$("#si").value=z.i}catch(e){}
-function save(){try{localStorage.setItem("bidv.co1",JSON.stringify({S:S,Q:Q,D:D,n:$("#sn").value,i:$("#si").value}))}catch(e){}}
-const ansOf=(T,q)=>T.o?q[1]:q[2];
-function tabScore(t){const T=tabs[t];if(!T.qs)return null;let c=0,n=0;T.qs.forEach((q,i)=>{if(S[t]&&i in S[t]){n++;if(S[t][i]===ansOf(T,q))c++}});return{c:c,n:n,tot:T.qs.length}}
-const total=tabs.reduce((a,t)=>a+(t.qs?t.qs.length:0),0);
-function score(){let c=0,n=0;tabs.forEach((T,t)=>{const r=tabScore(t);if(r){c+=r.c;n+=r.n}});$("#score").textContent="Score: "+c+" correct of "+n+" answered ("+total+" questions)"}
-const words=x=>(x||"").trim().split(/\s+/).filter(Boolean).length;
-function show(t){cur=t;const T=tabs[t];
-document.querySelectorAll("#nav button").forEach((b,i)=>b.classList.toggle("on",i===t));
-if(T.sub){report();score();return}
-$("#panel").innerHTML='<div class="grid"><section class="card"><h2>Theory</h2>'+T.th+'</section><section class="card"><h2>Tutorial: '+T.ti+'</h2><p class="mut">'+T.how+'</p>'+(T.pr?'<p class="pr-p"><b>Write it up:</b> '+T.pr+'</p>':'')+'<div id="tut"></div></section></div>';
-T.sim?sim():quiz(t);writeUp(t);score()}
-function writeUp(t){const T=tabs[t];if(!T.pr)return;const w=document.createElement("div");
-w.innerHTML='<p class="nl"><b>Write it up &middot; '+esc(T.ti)+'</b></p><textarea class="qn" placeholder="Write 2 to 4 sentences in your own words"></textarea>';
-const ta=w.querySelector("textarea");ta.value=Q["w-"+t]||"";ta.oninput=()=>{Q["w-"+t]=ta.value;save()};$("#tut").appendChild(w)}
-
-function noteBox(t,key,label,parent){const w=document.createElement("div");w.innerHTML='<p class="nl"><b>'+label+'</b></p><textarea class="qn" placeholder="Write 1 or 2 sentences"></textarea>';
-const ta=w.querySelector("textarea");ta.value=Q[key]||"";ta.oninput=()=>{Q[key]=ta.value;save()};parent.appendChild(w)}
-function reveal(d,t,i,j,ans,why){d.querySelectorAll("button").forEach((x,k)=>{x.disabled=true;if(k===ans)x.classList.add("good");else if(k===j)x.classList.add("bad")});
-d.querySelector(".fb").innerHTML=(j===ans?"<b>Correct.</b> ":"<b>Not quite.</b> ")+why}
-function quiz(t){const T=tabs[t],box=$("#tut");
-T.qs.forEach((q,i)=>{const opts=T.o||q[1],ans=ansOf(T,q),why=T.o?q[2]:q[3],text=q[0];
-const d=document.createElement("div");d.className="q";d.innerHTML='<p><b>'+(i+1)+'.</b> '+text+'</p><div class="opts"></div><p class="fb"></p>';
-opts.forEach((o,j)=>{const b=document.createElement("button");b.textContent=o;
-b.onclick=()=>{S[t]=S[t]||{};if(i in S[t])return;S[t][i]=j;reveal(d,t,i,j,ans,why);score();save()};
-d.querySelector(".opts").appendChild(b)});box.appendChild(d);noteBox(t,t+"-"+i,"What did I learn from this question?",d);
-if(S[t]&&i in S[t])reveal(d,t,i,S[t][i],ans,why)});
-const r=document.createElement("button");r.className="rs";r.textContent="Reset this tutorial";r.onclick=()=>{S[t]={};save();show(t)};box.appendChild(r)}
-function sl(id,l,mn,mx,st,v){return '<label for="'+id+'">'+l+': <span id="v_'+id+'">'+v+'</span></label><input type="range" id="'+id+'" min="'+mn+'" max="'+mx+'" step="'+st+'" value="'+v+'">'}
-const f=(x,d)=>x.toLocaleString("en-IN",{maximumFractionDigits:d===undefined?2:d,minimumFractionDigits:d===undefined?2:d});
-const DAYS=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],SOLD=[18,22,20,25,30,45,40],COST=60,PRICE=100,GUT=30;
-function day(q,d){const sold=Math.min(q,d);return{sold:sold,left:q-sold,lost:d-sold,p:sold*PRICE-q*COST}}
-function sim(){const wavg=(SOLD[0]+SOLD[1]+SOLD[2]+SOLD[3]+SOLD[4])/5,eavg=(SOLD[5]+SOLD[6])/2,rr=(eavg/wavg).toFixed(1);
-$("#tut").innerHTML='<h3>Step 1. Look at the data</h3><p class="mut">Cakes customers wanted last week.</p><div id="d1"></div>'
-+'<h3>Step 2. Find the information</h3><div class="out"><div class="k"><b>'+wavg+'</b>Weekday average (Mon-Fri)</div><div class="k"><b>'+eavg+'</b>Weekend average (Sat-Sun)</div><div class="k"><b>'+rr+'x</b>Weekend vs weekday</div></div><p class="fb">Pattern: weekends sell almost double. Baking 30 every day is too many on weekdays and too few at the weekend.</p>'
-+'<h3>Step 3. Make the decision</h3><p class="mut">How many cakes will you bake?</p>'+sl("wd","Each weekday (Mon-Fri)",10,50,1,D.wd)+sl("we","Each weekend day (Sat-Sun)",10,60,1,D.we)
-+'<div class="out" id="o1"></div><div id="tb"></div><p id="vb" class="fb"></p>';
-document.querySelectorAll("#tut input").forEach(i=>i.oninput=calc);
-const mx=Math.max(...SOLD);$("#d1").innerHTML=SOLD.map((x,i)=>'<div class="br"><span style="width:34px">'+DAYS[i]+'</span><i style="width:'+(x/mx*60)+'%"></i><span>'+x+'</span></div>').join("");tabs[6].sp.forEach((x,k)=>noteBox(6,"6-"+k,x,$("#tut")));calc()}
-function calc(){document.querySelectorAll("#tut input").forEach(i=>{$("#v_"+i.id).textContent=i.value});
-const wd=+$("#wd").value,we=+$("#we").value;D.wd=wd;D.we=we;save();const q=SOLD.map((_,i)=>i<5?wd:we);
-const r=SOLD.map((d,i)=>day(q[i],d)),tot=r.reduce((a,x)=>a+x.p,0),gut=SOLD.reduce((a,d)=>a+day(GUT,d).p,0),best=SOLD.reduce((a,d)=>a+d*(PRICE-COST),0);
-const waste=r.reduce((a,x)=>a+x.left,0),lost=r.reduce((a,x)=>a+x.lost,0);
-$("#o1").innerHTML='<div class="k"><b>₹'+f(tot,0)+'</b>Your weekly profit</div><div class="k"><b>₹'+f(gut,0)+'</b>Gut feeling (30 a day)</div><div class="k"><b>'+(tot>=gut?"+":"−")+'₹'+f(Math.abs(tot-gut),0)+'</b>Gain from your decision</div>';
-$("#tb").innerHTML='<table><tr><th>Day</th><th>Baked</th><th>Wanted</th><th>Wasted</th><th>Missed sales</th><th>Profit ₹</th></tr>'+r.map((x,i)=>'<tr><td>'+DAYS[i]+'</td><td>'+q[i]+'</td><td>'+SOLD[i]+'</td><td>'+x.left+'</td><td>'+x.lost+'</td><td>'+f(x.p,0)+'</td></tr>').join("")+'</table>';
-$("#vb").innerHTML='<b>What this shows:</b> you wasted '+waste+' cakes and missed '+lost+' sales this week. '+(tot>gut?"Using the weekday and weekend pattern beats the gut feeling.":tot===gut?"This is the same as the gut feeling. Try different numbers for weekdays and weekends.":"This does worse than the gut feeling. Use the pattern in Step 2 to do better.")+' Even perfect baking would earn ₹'+f(best,0)+', so some gap always remains. Past data guides the decision but cannot promise the future.'}
-
-function weekly(wd,we){return SOLD.reduce((a,d,i)=>a+day(i<5?wd:we,d).p,0)}
-function esc(x){return (x||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
-const note=x=>x&&x.trim()?esc(x):"Not written.";
-function body(nm,id){let c=0,n=0;tabs.forEach((T,t)=>{const r=tabScore(t);if(r){c+=r.c;n+=r.n}});
-let h='<h2>Module 1: From Data to Decisions</h2><div class="hd"><div><b>Name:</b> '+esc(nm)+'</div><div><b>Student ID:</b> '+esc(id)+'</div><div><b>Date:</b> '+new Date().toLocaleDateString("en-IN")+'</div><div><b>Quiz score:</b> '+c+' correct of '+n+' answered ('+total+' questions)</div></div>';
-for(let t=0;t<NT;t++){const T=tabs[t],r=tabScore(t);
-h+='<h3>'+T.n+': '+T.ti+'</h3>';
-if(r){h+='<p><b>Tutorial result:</b> '+r.c+' correct of '+r.n+' answered ('+r.tot+' questions)</p>';
-if(T.pr)h+='<p><b>Write it up:</b> '+T.pr+'</p><div class="ans">'+note(Q["w-"+t])+'</div>';
-T.qs.forEach((q,i)=>{const opts=T.o||q[1],ans=ansOf(T,q),why=T.o?q[2]:q[3],ch=S[t]&&i in S[t]?S[t][i]:null;
-h+='<div class="qb"><p><b>Q'+(i+1)+'.</b> '+q[0]+'</p><p><b>My answer:</b> '+(ch===null?"Not answered":opts[ch]+(ch===ans?" (correct)":" (not quite; correct answer: "+opts[ans]+")"))+'</p><p><b>Explanation:</b> '+why+'</p><p><b>What I learned:</b></p><div class="ans">'+note(Q[t+"-"+i])+'</div></div>'})}
-else{const wd=D.wd,we=D.we,pr=weekly(wd,we),g=weekly(GUT,GUT);h+='<p><b>My decision:</b> bake '+wd+' cakes on each weekday and '+we+' on each weekend day. <b>Weekly profit:</b> ₹'+f(pr,0)+' against ₹'+f(g,0)+' with the gut feeling of 30 a day ('+(pr>=g?"gain":"loss")+' of ₹'+f(Math.abs(pr-g),0)+').</p>';
-T.sp.forEach((x,k)=>{h+='<div class="qb"><p><b>'+x+'</b></p><div class="ans">'+note(Q["6-"+k])+'</div></div>'})
-if(T.pr){h+='<div class="qb"><p><b>Write it up:</b> '+T.pr+'</p><div class="ans">'+note(Q["w-"+t])+'</div></div>'}}
+var stage = document.querySelector('.stage');
+var slides = Array.prototype.slice.call(stage.querySelectorAll('.slide'));
+var n = slides.length, cur = 0;
+var bar = document.getElementById('pbar');
+function fit() {
+  var box = document.querySelector('.stage-box');
+  var wrap = document.querySelector('.deck-wrap');
+  var nav = document.querySelector('.nav');
+  var navH = nav ? nav.offsetHeight + 12 : 56;
+  var availW = window.innerWidth - 24;
+  var availH = wrap.clientHeight - navH;
+  var s = Math.min(availW / 1280, Math.max(availH / 720, 0.3), 2.2);
+  stage.style.transform = 'scale(' + s + ')';
+  box.style.height = (720 * s) + 'px';
+  box.style.width = (1280 * s) + 'px';
 }
-return h}
-function report(){
-const nm=$("#sn").value.trim(),id=$("#si").value.trim();
-const miss=[];if(!nm)miss.push("your name");if(!id)miss.push("your student ID number");
-let noQ=0;tabs.forEach((T,t)=>{if(t>=NT)return;(T.qs||T.sp).forEach((_,i)=>{if(words(Q[t+"-"+i])<5)noQ++});if(T.pr&&words(Q["w-"+t])<5)noQ++});
-let h='<section class="card rep"><h2>Submission report</h2><div class="np">';
-if(miss.length)h+='<div class="warn"><b>Before you save:</b> enter '+miss.join(" and ")+' at the top of the page.</div>';
-if(noQ)h+='<div class="warn">'+noQ+' “What I learned” note(s) are empty or very short.</div>';
-if(!miss.length&&!noQ)h+='<div class="okb">All parts are complete. Ready to download.</div>';
-h+='<p>Download your report below. For the PDF, click <b>Save as PDF</b> and choose “Save as PDF” as the destination. Both files start with your ID. Upload the file your instructor asks for.</p><p style="display:flex;gap:10px;flex-wrap:wrap"><button class="pb" id="pdf"'+(miss.length?' disabled':'')+'>Save as PDF</button><button class="pb" id="doc"'+(miss.length?' disabled':'')+'>Download Word (.doc)</button></p></div>';
-h+='<div id="rb">'+body(nm,id)+'</div></section>';
-$("#panel").innerHTML=h;
-const fn="BI_Module1_"+id.replace(/[^\w-]+/g,"_");
-$("#pdf").onclick=()=>{const old=document.title;document.title=fn;window.onafterprint=()=>{document.title=old};window.print()};
-$("#doc").onclick=()=>{const st='body{font-family:Calibri,Arial,sans-serif;font-size:11pt}h2{color:#1F2A44}h3{color:#1F2A44;border-top:1px solid #bbb;padding-top:6pt}.ans{background:#f3efe3;padding:6pt;margin:3pt 0;white-space:pre-wrap}.qb{margin:6pt 0 10pt}';
-const html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>'+fn+'</title><style>'+st+'</style></head><body>'+body(nm,id)+'</body></html>';
-const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+html],{type:"application/msword"}));a.download=fn+".doc";document.body.appendChild(a);a.click();a.remove()}}
-$("#nav").innerHTML=tabs.map((t,i)=>'<button>'+t.n+'</button>').join("");
-document.querySelectorAll("#nav button").forEach((b,i)=>b.onclick=()=>show(i));
-$("#sn").oninput=$("#si").oninput=()=>{save();if(tabs[cur].sub)report()};
-show(0);
-</script></body></html>
+function go(i, push) {
+  cur = (i + n) % n;
+  for (var j = 0; j < n; j++) slides[j].classList.toggle('active', j === cur);
+  document.getElementById('count').textContent = (cur + 1) + ' / ' + n;
+  bar.style.width = ((cur + 1) / n * 100) + '%';
+  if (push !== false && location.hash !== '#/' + (cur + 1))
+    history.replaceState(null, '', '#/' + (cur + 1));
+}
+document.getElementById('prev').onclick = function(e) { e.stopPropagation(); go(cur - 1); };
+document.getElementById('next').onclick = function(e) { e.stopPropagation(); go(cur + 1); };
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { go(cur + 1); e.preventDefault(); }
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp') go(cur - 1);
+  else if (e.key === 'f' || e.key === 'F') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+});
+var tx = null;
+stage.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; }, {passive:true});
+stage.addEventListener('touchend', function(e) {
+  if (tx === null) return;
+  var dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 40) go(dx < 0 ? cur + 1 : cur - 1);
+  tx = null;
+});
+stage.addEventListener('click', function(e) {
+  var r = stage.getBoundingClientRect();
+  go(e.clientX < (r.left + r.width * 0.5) ? cur - 1 : cur + 1);
+});
+window.addEventListener('resize', fit);
+fit();
+var m = location.hash.match(/^#\/(\d+)$/);
+go(m ? parseInt(m[1], 10) - 1 : 0, false);
+if (!m) history.replaceState(null, '', '#/1');
+</script>
+</body>
+</html>
