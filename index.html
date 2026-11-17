@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Intelligence &amp; Data Visualization - 26MB5210E</title>
+<style>
+:root { --bg:#0F172A; --panel:#1E293B; --line:#2B3A55; --ink:#E2E8F0; --dim:#94A3B8; --amber:#F5B041; }
+* { box-sizing:border-box; margin:0; padding:0; }
+html { min-height:100%; }
+body { min-height:100vh; background:var(--bg); color:var(--ink); font-family:Arial,"Helvetica Neue",sans-serif;
+  display:flex; flex-direction:column; overflow-y:auto; padding:24px 0; }
+.wrap { max-width:1100px; width:92%; margin:auto; }
+.kick0 { color:var(--amber); font-weight:700; letter-spacing:3px; font-size:13px; }
+h1 { font-size:40px; line-height:1.15; margin:10px 0 6px; }
+.sub { color:var(--dim); font-size:16px; margin-bottom:22px; line-height:1.5; }
+
+/* 1 - 2 - 2 - 2 Grid */
+.grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:14px; }
+
+.card { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px 22px;
+  display:flex; flex-direction:column; justify-content:space-between; min-height:115px; }
+.card.intro { grid-column:span 2; flex-direction:row; align-items:center; gap:20px;
+  background:linear-gradient(90deg, #1E293B 0%, #172554 100%); border-color:#3B82F6; }
+.card.intro .info { flex:1; }
+.card.soon { opacity:0.55; border-style:dashed; }
+
+.card .kick { color:var(--amber); font-size:11px; font-weight:700; letter-spacing:2px; margin-bottom:4px; }
+.card.intro .kick { color:#93C5FD; }
+.card .ttl { font-size:19px; font-weight:700; line-height:1.3; color:#FFFFFF; margin-bottom:12px; }
+.card.intro .ttl { font-size:21px; margin-bottom:4px; }
+.card.intro .desc { color:var(--dim); font-size:14px; line-height:1.4; }
+.card.soon .ttl { color:var(--dim); font-weight:600; }
+
+.card .ln { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.btn { display:inline-flex; align-items:center; text-decoration:none; background:var(--amber);
+  color:#14213D; font-weight:700; font-size:13px; padding:7px 16px; border-radius:6px; border:0; }
+.btn.ghost { background:transparent; color:var(--ink); border:1px solid var(--line); }
+.btn:hover { filter:brightness(1.08); }
+.tag-soon { color:var(--dim); font-size:13px; font-style:italic; }
+
+footer { margin-top:24px; color:#94A3B8; font-size:13px; line-height:1.7;
+  border-top:1px solid var(--line); padding-top:16px; }
+
+@media (max-width:720px) {
+  .grid { grid-template-columns:1fr; }
+  .card.intro { grid-column:span 1; flex-direction:column; align-items:flex-start; }
+  h1 { font-size:30px; }
+}
+</style></head><body><div class="wrap">
+<div class="kick0">KL BUSINESS SCHOOL &middot; MBA &middot; 2026-27 &middot; EVEN SEM</div>
+<h1>Business Intelligence &amp; Data Visualization</h1>
+<div class="sub">Course 26MB5210E &nbsp;&middot;&nbsp; CO1 &ndash; CO6 &nbsp;&middot;&nbsp; L-T-P-S 2-1-3-0 &nbsp;&middot;&nbsp; interactive dashboards and in-browser labs, hosted online.</div>
+
+<div class="grid">
+  <!-- Row 1: 1 tile (overview, spans full width) -->
+  <div class="card intro">
+    <div class="info">
+      <div class="kick">START HERE</div>
+      <div class="ttl">From data to decisions</div>
+      <div class="desc">BI turns data into information people can act on. Work through the Module 1 theory dashboard, then run the three interactive labs in your browser.</div>
+    </div>
+    <div class="ln">
+      <a class="btn" href="co1-theory.html">Start CO1</a>
+    </div>
+  </div>
+
+  <!-- Row 2: CO1 & CO2 -->
+  <div class="card">
+    <div>
+      <div class="kick">CO1 &middot; ANALYTICS TAXONOMY</div>
+      <div class="ttl">Analytics Taxonomy &amp; the Data Lifecycle</div>
+    </div>
+    <div class="ln">
+      <a class="btn" href="co1-theory.html">Theory</a>
+      <a class="btn ghost" href="co1-labs.html">Labs</a>
+    </div>
+  </div>
+  <div class="card soon">
+    <div>
+      <div class="kick">CO2 &middot; KPI DESIGN</div>
+      <div class="ttl">KPI &amp; Metric Design</div>
+    </div>
+    <div class="ln"><span class="tag-soon">Coming soon</span></div>
+  </div>
+
+  <!-- Row 3: CO3 & CO4 -->
+  <div class="card soon">
+    <div>
+      <div class="kick">CO3 &middot; VISUALIZATION</div>
+      <div class="ttl">Visualization Principles &amp; Chart Selection</div>
+    </div>
+    <div class="ln"><span class="tag-soon">Coming soon</span></div>
+  </div>
+  <div class="card soon">
+    <div>
+      <div class="kick">CO4 &middot; DASHBOARD BUILD</div>
+      <div class="ttl">Dashboard Build in Power BI / Tableau</div>
+    </div>
+    <div class="ln"><span class="tag-soon">Coming soon</span></div>
+  </div>
+
+  <!-- Row 4: CO5 & CO6 -->
+  <div class="card soon">
+    <div>
+      <div class="kick">CO5 &middot; STORYTELLING</div>
+      <div class="ttl">Data Storytelling</div>
+    </div>
+    <div class="ln"><span class="tag-soon">Coming soon</span></div>
+  </div>
+  <div class="card soon">
+    <div>
+      <div class="kick">CO6 &middot; BI ARCHITECTURE</div>
+      <div class="ttl">BI Architecture &amp; Self-Service Analytics</div>
+    </div>
+    <div class="ln"><span class="tag-soon">Coming soon</span></div>
+  </div>
+</div>
+
+<footer>Dashboards and labs open straight in the browser &mdash; no installs, no downloads.<br><b>Faculty Instructors:</b> Hema Divya Kantamaneni &middot; Venkateswara Kumar K S &middot; Uday Kalyanam &nbsp;&middot;&nbsp; <b>Course Coordinator:</b> Hema Divya Kantamaneni &middot; Dept of MBA (KLVZA)</footer>
+</div></body></html>

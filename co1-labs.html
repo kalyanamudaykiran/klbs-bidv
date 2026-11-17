@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Analytics Labs 1.1–1.3 · Simulations</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1c1c1a;--mut:#66665f;--card:#fff;--bd:#dcdad0;--ac:#2456d6;--ok:#16793d;--bad:#b42323;--wn:#c26a05;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15161a;--fg:#ecece8;--mut:#9a9a94;--card:#1f2024;--bd:#34353a;--ac:#7aa2ff;--ok:#4ade80;--bad:#f87171;--wn:#fbbf24}}
+:root[data-theme="dark"]{--bg:#15161a;--fg:#ecece8;--mut:#9a9a94;--card:#1f2024;--bd:#34353a;--ac:#7aa2ff;--ok:#4ade80;--bad:#f87171;--wn:#fbbf24}
+html{color-scheme:light dark}
+body{margin:0 auto;max-width:960px;padding:12px;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+h1{font-size:20px;margin:6px 0}h2{font-size:18px;margin:0 0 6px}h3{font-size:16px;margin:0 0 6px}h4{font-size:14px;margin:0 0 6px}
+.mut{color:var(--mut)}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+button,select{font:inherit;border:1px solid var(--bd);background:var(--card);color:var(--fg);border-radius:8px;padding:5px 10px;cursor:pointer}
+button.on{background:var(--ac);color:#fff;border-color:var(--ac)}button.ok{border-color:var(--ok);color:var(--ok);font-weight:600}button.no{border-color:var(--bad);color:var(--bad)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:12px}
+.sub{border:1px solid var(--bd);border-radius:10px;padding:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px}
+.q{padding:8px 0;border-bottom:1px solid var(--bd)}.opts{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}.fb{font-size:13px;min-height:18px}
+.pill{display:inline-block;background:var(--bg);border:1px solid var(--bd);border-radius:99px;padding:2px 10px;font-size:13px}
+.big{font-size:22px;font-weight:700}.kpi{display:flex;gap:14px;flex-wrap:wrap;margin:6px 0}.kpi div{min-width:90px}
+.note{border-left:3px solid var(--wn);padding:4px 10px;margin:8px 0;font-size:13px;background:var(--bg)}
+input[type=range]{width:100%}label{display:block;font-size:13px;margin:6px 0}
+table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px solid var(--bd);padding:4px 6px;text-align:left}
+.tw{overflow-x:auto}.card2{border:1px solid var(--bd);border-radius:8px;padding:8px;margin:6px 0;font-size:13px;background:var(--bg)}
+.M{color:var(--bad);font-weight:700}.S{color:var(--wn);font-weight:700}.C{color:var(--ac);font-weight:700}.W{color:var(--mut);font-weight:700}
+.stairs{display:flex;gap:8px;align-items:flex-end}.stairs div{flex:1;border-radius:8px 8px 0 0;background:var(--ac);color:#fff;padding:8px;font-size:13px}
+.bar{height:12px;border-radius:3px;background:var(--ac)}.bw{position:relative;background:var(--bg);height:12px;border-radius:3px}
+.bl{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--bad)}
+.top{display:flex;align-items:center;gap:12px;padding:10px 16px;background:#0F172A;color:#E2E8F0;flex-wrap:wrap;max-width:960px;margin:0 auto}
+.top .brand{font-size:13px;letter-spacing:2px;color:#F5B041;font-weight:700}
+.top .crumb{font-size:13px;color:#94A3B8}
+.top .crumb a{color:#E2E8F0;text-decoration:none}
+.top .grow{flex:1}
+.top .btn{display:inline-flex;align-items:center;text-decoration:none;background:#F5B041;color:#14213D;font-weight:700;font-size:13px;padding:6px 14px;border-radius:6px}
+.top .btn.ghost{background:transparent;color:#E2E8F0;border:1px solid #2B3A55}
+.id{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 0}
+.id label{flex:1 1 200px;font-size:13px;margin:0}
+.id input{width:100%;margin-top:3px;padding:7px 9px;border:1px solid var(--bd);border-radius:6px;background:var(--card);color:var(--fg);font:inherit}
+textarea{width:100%;min-height:70px;padding:8px 10px;border:1px solid var(--bd);border-radius:6px;background:var(--card);color:var(--fg);font:inherit;resize:vertical}
+.pr-p{background:var(--bg);border-left:3px solid var(--wn);padding:6px 10px;border-radius:4px;margin:8px 0;font-size:13px}
+.pb{border:0;background:var(--ac);color:#fff;padding:9px 16px;border-radius:8px;font:inherit;font-weight:600;cursor:pointer}
+.pb:disabled{opacity:.4;cursor:not-allowed}
+.warn{border-left:3px solid var(--bad);background:var(--bg);padding:6px 10px;border-radius:4px;margin:8px 0;font-size:13px}
+.okb{border-left:3px solid var(--ok);background:var(--bg);padding:6px 10px;border-radius:4px;margin:8px 0;font-size:13px}
+.rep h3{font-size:15px;margin:14px 0 4px;border-top:1px solid var(--bd);padding-top:8px}
+.rep .qb{margin:6px 0 10px;padding-left:8px;border-left:3px solid var(--bd)}
+.rep .ans{white-space:pre-wrap;background:var(--bg);border-radius:6px;padding:8px 10px;margin:4px 0;font-size:13px}
+.rep .hd{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin:8px 0}
+@media print{
+:root:root:root{--bg:#fff;--fg:#000;--mut:#333;--card:#fff;--bd:#bbb;--ac:#2456d6;--ok:#16793d;--bad:#b42323;--wn:#c26a05;color-scheme:light}
+.top,.tabs,.id,.np,#score{display:none!important}
+body{max-width:100%;padding:0}
+.card{border:none;padding:0}
+.rep .qb,.rep .ans{border-color:#bbb}
+}
+</style></head><body>
+<div class="top"><div class="brand">BIDV &middot; 26MB5210E</div><div class="crumb"><a href="index.html">Course</a> &nbsp;/&nbsp; CO1 Labs</div><div class="grow"></div><a class="btn" href="co1-theory.html">Theory</a><a class="btn ghost" href="index.html">All modules</a></div>
+<h1>Analytics Labs 1.1 – 1.3 · Interactive simulations</h1>
+<p class="mut">Learn by doing: classify, interview, then replay a lunch rush. All data are simulated in your browser to resemble the Guild mess scans (numbers will differ slightly from the real CSV).</p>
+<div class="id"><label>Student name<input id="sn" type="text" autocomplete="name" placeholder="Your full name"></label><label>Student ID number<input id="si" type="text" placeholder="e.g. 2400012345"></label></div>
+<div class="tabs"><button class="on" data-t="s0">The case</button><button data-t="s1">Lab 1.1 Four analytics types</button><button data-t="s2">Lab 1.2 Requirements</button><button data-t="s3">Lab 1.3 Refresh latency</button><button data-t="s4">Submission</button></div>
+
+<section id="s0">
+<div class="card"><h2>The case · The lunch rush at the Guild mess</h2>
+<p>Every weekday, hundreds of students reach the Guild mess at almost the same time. Between about 12:30 and 13:30 the queues grow, students wait far longer than at the start or end of lunch, and some may give up and leave. The mess committee wants an <b>operator dashboard</b> that helps the staff react during lunch, and a <b>committee view</b> that shows whether things improve week by week.</p>
+<div class="grid">
+<div class="sub"><h4>What we know</h4><ul style="margin:0;padding-left:18px"><li>13,972 payment scans over 12 lunches (weeks 7–8, 11:30–14:30). Week 7 was exam week.</li><li>Average wait is about 50 s off-peak and about 120 s in the rush.</li><li>8 counters are open today. A standby counter exists but opens by habit, not by data.</li><li>Target: 95% of students served within 5 minutes (the 95th-percentile wait is about 245 s today).</li></ul></div>
+<div class="sub"><h4>Who is involved</h4><ul style="margin:0;padding-left:18px"><li><b>Lakshmi</b>, mess manager: staffs the lunch.</li><li><b>Ravi</b>, counter supervisor: watches the queue.</li><li><b>Prof. Rao</b>, committee chair: owns the budget and the target.</li><li><b>Dean’s office</b> and <b>Finance</b>: ask for volumes and revenue.</li><li><b>Registrar</b>: protects student data.</li></ul></div>
+</div>
+<h4 style="margin-top:12px">Scans per 15-minute slot, average lunch</h4><div id="cb"></div><p class="mut" style="font-size:12px">Orange bars: the rush window 12:30–13:29. Demand more than triples in an hour.</p>
+<div class="note"><b>The problem:</b> nobody can say, in numbers, <i>what happens, why, what is coming, and what to do</i>. Questions come from everywhere and nobody knows which dashboard to build, how fresh it must be, or whether the data even exist.</div>
+<h4>Your role: the analyst who has to answer three things</h4>
+<div class="grid">
+<div class="sub"><b>Lab 1.1</b><br>What are people really asking? Sort twelve questions into four types and answer one of each with data.</div>
+<div class="sub"><b>Lab 1.2</b><br>What should we build? Interview stakeholders, check the data, and pick a backlog that fits 20 points of effort.</div>
+<div class="sub"><b>Lab 1.3</b><br>How fresh must it be? Replay the rush and see how long each refresh interval takes to show the surge.</div>
+</div>
+<p style="margin-top:12px"><button class="on" onclick="document.querySelector('[data-t=s1]').click()">Start Lab 1.1 →</button></p></div>
+</section>
+
+<section id="s1" hidden>
+<div class="card"><h2>Step 1 · Classify the twelve questions</h2>
+<p class="mut">Tap the type of answer each question needs: a past fact (descriptive), a reason (diagnostic), a forecast with uncertainty (predictive) or an action (prescriptive).</p>
+<div id="quiz"></div><p><span id="score" class="pill">0 / 12 classified correctly</span></p></div>
+<div class="card"><h2>Step 2 · Answer one question of each type <button id="re1">New sample of 12 lunches</button></h2>
+<div class="grid">
+<div class="sub"><h4>① Descriptive · Q1, Q2</h4><div id="d1"></div><div id="bar"></div><p class="mut" style="font-size:12px">Avg wait by 15-min slot (bars start at zero; orange = rush window 12:30–13:29).</p></div>
+<div class="sub"><h4>② Diagnostic · Q5–Q7</h4><div id="d2"></div></div>
+<div class="sub"><h4>③ Predictive · Q9</h4><div id="sc"></div><label>Scans in the slot: <b id="nv">250</b><input id="ns" type="range" min="20" max="300" value="250"></label><div id="d3"></div></div>
+<div class="sub"><h4>④ Prescriptive · Q11</h4>
+<label>Target utilisation ρ*: <b id="rv">85</b>%<input id="rs" type="range" min="50" max="100" value="85"></label>
+<label>Mean service time s: <b id="sv">47</b> s<input id="ss" type="range" min="30" max="70" value="47"></label>
+<label>Counters open today: <b id="ov">8</b><input id="os" type="range" min="6" max="14" value="8"></label><div id="d4"></div></div>
+</div></div>
+<div class="card"><h2>Step 3 · The value–difficulty staircase</h2>
+<div class="stairs"><div style="height:70px"><b>Descriptive</b><br>What happened? Easy, low value alone.</div><div style="height:100px"><b>Diagnostic</b><br>Why? Needs segments.</div><div style="height:130px"><b>Predictive</b><br>What next? Needs a model.</div><div style="height:160px"><b>Prescriptive</b><br>What do we do? Needs a rule and an owner.</div></div>
+<p class="mut">Write one sentence per answer: who would act on it, and how? (For example, ④ → the supervisor rosters the 12:45 shift.)</p>
+<div class="grid"><div class="sub">
+<label>① Descriptive<textarea id="st3-0" placeholder="Who would act, and how?"></textarea></label>
+<label>② Diagnostic<textarea id="st3-1" placeholder="Who would act, and how?"></textarea></label>
+<label>③ Predictive<textarea id="st3-2" placeholder="Who would act, and how?"></textarea></label>
+<label>④ Prescriptive<textarea id="st3-3" placeholder="Who would act, and how?"></textarea></label>
+</div></div>
+</div>
+</section>
+
+<section id="s2" hidden>
+<div class="card"><h2>Lab 1.2 · Requirement-gathering simulator</h2>
+<p class="mut">Step 1: interview each stakeholder (tap a name). Each interview adds user stories to the board. Budget for release 1: 20 points.</p>
+<div id="who" class="tabs"></div><div id="quote" class="note">Pick a stakeholder to begin.</div>
+<h4>Story board <span id="cnt" class="pill">0 cards</span></h4><div id="board"></div></div>
+<div class="card"><h3>Step 2 · Does the data exist? (SQL data checks)</h3>
+<div class="tabs"><button data-c="0">1 · Scan table columns</button><button data-c="1">2 · Staff and shifts</button><button data-c="2">3 · Arrivals vs scans</button></div><div id="chk" class="card2">Run a check.</div></div>
+<div class="card"><h3>Step 3 · MoSCoW rule</h3>
+<p class="mut">Must = decision during lunch and data exist · Should = decision after lunch and data exist · Could = no decision named · Won’t = data do not exist.</p><div class="tw"><table id="bl"></table></div></div>
+<div class="card"><h3>Step 4 · Plan release 1 (budget
+<select id="bud"><option>20</option><option>24</option></select> points)</h3>
+<p class="mut">Musts are locked in. Tick Shoulds and Coulds to fill the remaining budget, then compare with the best plan.</p>
+<div id="pl"></div><div class="kpi" id="mt"></div><button id="opt">Show the best plan</button> <span id="optr" class="mut"></span>
+<div class="note"><b>Non-functional requirements to write down:</b> readable at 3 m, refresh interval, no student identifiers on the wall screen, clear behaviour when the feed drops.</div></div>
+</section>
+
+<section id="s3" hidden>
+<div class="card"><h2>Lab 1.3 · Replay a lunch: how fresh must the dashboard be?</h2>
+<p class="mut">Thin line = true 10-minute rolling mean wait. Thick line = what the dashboard shows after refreshing every R minutes plus 2 min lag. Predict the delay first, then press Play.</p>
+<div class="grid"><label>Lunch <select id="lu"></select></label>
+<label>Refresh interval R <select id="rr"><option>1</option><option>5</option><option selected>15</option><option>30</option><option>60</option></select> min</label>
+<label>Alarm threshold θ: <b id="tv">90</b> s<input id="ts" type="range" min="70" max="110" value="90"></label></div>
+<button id="pl3" class="on">▶ Play</button> <button id="rs3">↺ Show full lunch</button>
+<div id="ch"></div>
+<div class="kpi" id="ro"></div><div id="vd" class="note"></div></div>
+<div class="card"><h3>All 12 lunches · mean delay vs the latency budget</h3>
+<p class="mut">Budget = 10·log₂(1.25) = 3.22 min keeps 80% of the value of acting. Red line = budget.</p><div class="tw"><table id="tb"></table></div>
+<div class="note">Power BI service: scheduled refresh allows up to 8 per day on Pro and 48 on Premium Per User or Fabric. Neither gets near R = 1–3 min, so a live operator view needs DirectQuery page refresh, streaming or an event push; the committee view is fine on a daily refresh.</div></div>
+</section>
+
+<section id="s4" hidden>
+<div class="card rep"><h2>Submission report</h2><div class="np">
+<p>Your progress (lab scores, the staircase sentences, your release-1 plan) is saved on this device automatically. Download your report below. For the PDF, click <b>Save as PDF</b> and choose “Save as PDF” as the destination. Both files start with your ID. Upload the file your instructor asks for.</p>
+<p style="display:flex;gap:10px;flex-wrap:wrap"><button class="pb" id="pdf">Save as PDF</button><button class="pb" id="doc">Download Word (.doc)</button></p>
+</div><div id="rb"></div></div>
+</section>
+
+<script>
+const $=s=>document.querySelector(s);
+const rng=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const gs=r=>Math.sqrt(-2*Math.log(r()+1e-9))*Math.cos(6.2832*r());
+const avg=a=>a.reduce((s,v)=>s+v,0)/a.length;
+const clk=m=>{m+=690;return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0")};
+document.querySelectorAll(".tabs button[data-t]").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button[data-t]").forEach(x=>x.classList.toggle("on",x===b));document.querySelectorAll("section").forEach(s=>s.hidden=s.id!==b.dataset.t);if(b.dataset.t=="s4")reportL()});
+
+/* ---------- Lab 1.1 ---------- */
+const TY=["Descriptive","Diagnostic","Predictive","Prescriptive"],HINT=["a fact about the past","an explanation of why","a forecast with uncertainty","an action to take"];
+const Q=[["How many students ate lunch each day in weeks 7–8?","Dean’s office",0],["Which 15-minute slot had the highest average wait?","Committee chair",0],["What share of payments are made by UPI?","Finance office",0],["What was the revenue per lunch in week 8?","Finance office",0],["Why are waits longer from 12:30 to 13:30 than at 12:00?","Committee chair",1],["Was the exam week the reason waits were long?","Dean’s office",1],["Is one serving line responsible for the peak wait?","Mess manager",1],["How many students will arrive at 12:45 next Wednesday?","Supervisor",2],["What average wait should we expect in a slot with 250 scans?","Mess manager",2],["How likely is next Thursday’s peak to miss the 95%-within-5-minutes target?","Committee chair",2],["How many servers should work at 12:45 so that each is busy at most 85% of the time?","Supervisor",3],["Should the standby counter open at 12:40 on weekdays?","Mess manager",3]];
+const done=new Set();
+Q.forEach((q,i)=>{const row=document.createElement("div");row.className="q";row.innerHTML=`<div><b>Q${i+1}</b> ${q[0]} <span class="mut">· ${q[1]}</span></div><div class="opts"></div><div class="fb mut"></div>`;
+ const o=row.querySelector(".opts"),fb=row.querySelector(".fb");
+ TY.forEach((t,k)=>{const b=document.createElement("button");b.textContent=t;b.onclick=()=>{if(k===q[2]){b.className="ok";done.add(i);fb.textContent="✓ It asks for "+HINT[k]+".";score()}else{b.className="no";fb.textContent="Not quite. Is the answer a past fact, a reason, a forecast or an action?"}};o.append(b)});
+ $("#quiz").append(row)});
+function score(){$("#score").textContent=done.size+" / 12 classified correctly"+(done.size==12?" · 4 descriptive, 3 diagnostic, 3 predictive, 2 prescriptive. Now answer one of each below.":"")}
+const W=[40,60,90,130,200,235,215,180,110,70,40,20],SL=W.map((_,k)=>clk(k*15));
+let seed1=7,D,F,N1245;
+function gen1(){const r=rng(seed1);D=[];for(let d=0;d<12;d++)for(let k=0;k<12;k++){const n=Math.max(5,Math.round(W[k]*.837*(1+.08*gs(r))));D.push({k,n,w:40+.42*n+6*gs(r)})}}
+function fit(x,y){const mx=avg(x),my=avg(y);let a=0,b=0,c=0;x.forEach((v,i)=>{a+=(v-mx)*(y[i]-my);b+=(v-mx)**2;c+=(y[i]-my)**2});return{b:a/b,a:my-a/b*mx,r:a/Math.sqrt(b*c)}}
+function bars(v,lab,hl,H=120){const w=480,m=Math.max(...v),bw=w/v.length;return `<svg viewBox="0 0 ${w} ${H+20}" width="100%">`+v.map((x,i)=>{const h=x/m*H;return `<rect x="${i*bw+3}" y="${H-h}" width="${bw-6}" height="${h}" fill="${hl(i)?"var(--wn)":"var(--ac)"}" opacity=".85"/><text x="${i*bw+bw/2}" y="${H+13}" font-size="9" text-anchor="middle" fill="var(--mut)">${lab[i]}</text>`}).join("")+"</svg>"}
+function render1(){
+ const perL=D.reduce((s,d)=>s+d.n,0)/12;N1245=avg(D.filter(d=>d.k==5).map(d=>d.n));
+ const wm=a=>a.reduce((s,d)=>s+d.n*d.w,0)/a.reduce((s,d)=>s+d.n,0);
+ const sw=SL.map((_,k)=>wm(D.filter(d=>d.k==k))),hi=sw.indexOf(Math.max(...sw)),pk=d=>d.k>=4&&d.k<=7;
+ F=fit(D.map(d=>d.n),D.map(d=>d.w));
+ $("#d1").innerHTML=`<div class="kpi"><div><span class="big">${perL.toFixed(0)}</span><br>scans / lunch</div><div><span class="big">${N1245.toFixed(0)}</span><br>in the 12:45 slot</div><div><span class="big">${SL[hi]}</span><br>worst avg wait</div></div>`;
+ $("#bar").innerHTML=bars(sw,SL,i=>i>=4&&i<=7);
+ $("#d2").innerHTML=`<div class="kpi"><div><span class="big">${wm(D.filter(pk)).toFixed(0)} s</span><br>rush window</div><div><span class="big">${wm(D.filter(d=>!pk(d))).toFixed(0)} s</span><br>off-peak</div><div><span class="big">${F.r.toFixed(2)}</span><br>r (scans vs wait)</div></div><div class="note">r shows how tightly load and wait move together, not that one <i>causes</i> the other. To test “exam week” or “one line” you compare segments (week 7 vs week 8, line by line) and ask whether the gap is bigger than the noise.</div>`;
+ upd3();upd4()}
+function upd3(){const n=+$("#ns").value;$("#nv").textContent=n;const W2=480,H=190,X=v=>40+v/300*(W2-50),Y=v=>H-24-v/170*(H-34);
+ let s=`<svg viewBox="0 0 ${W2} ${H}" width="100%"><g stroke="var(--bd)"><line x1="40" y1="${H-24}" x2="${W2-10}" y2="${H-24}"/><line x1="40" y1="10" x2="40" y2="${H-24}"/></g>`;
+ D.forEach(d=>s+=`<circle cx="${X(d.n)}" cy="${Y(d.w)}" r="2.5" fill="var(--ac)" opacity=".55"/>`);
+ s+=`<line x1="${X(0)}" y1="${Y(F.a)}" x2="${X(300)}" y2="${Y(F.a+F.b*300)}" stroke="var(--wn)" stroke-width="2"/><circle cx="${X(n)}" cy="${Y(F.a+F.b*n)}" r="6" fill="none" stroke="var(--bad)" stroke-width="2"/><text x="${W2-10}" y="${H-6}" text-anchor="end" font-size="10" fill="var(--mut)">scans per slot-day →</text><text x="44" y="18" font-size="10" fill="var(--mut)">mean wait (s)</text></svg>`;
+ $("#sc").innerHTML=s;$("#d3").innerHTML=`<div class="kpi"><div><span class="big">${F.b.toFixed(2)}</span><br>s per extra scan</div><div><span class="big">${(F.a+F.b*n).toFixed(0)} s</span><br>predicted wait</div></div><div class="note">A straight line is only a first model: waits climb faster as the counters approach full utilisation, so the line under-predicts at the top end.</div>`}
+function upd4(){const rho=+$("#rs").value/100,s=+$("#ss").value,o=+$("#os").value;$("#rv").textContent=Math.round(rho*100);$("#sv").textContent=s;$("#ov").textContent=o;
+ const lam=N1245/15,need=Math.ceil(lam*s/60/rho),u=lam*s/60/o;
+ $("#d4").innerHTML=`<div class="kpi"><div><span class="big">${lam.toFixed(1)}</span><br>arrivals/min</div><div><span class="big">${need}</span><br>servers needed</div><div><span class="big" style="color:var(--${need>o?"bad":"ok"})">${need>o?"+"+(need-o):"OK"}</span><br>vs ${o} open</div></div><div class="note">c = ⌈λs/ρ*⌉. With ${o} counters each is busy ${(u*100).toFixed(0)}% of the time${u>=1?" — above 100%, so the queue grows without limit":u>rho?" — above your target":""}. Why not plan for 100%? Any random bunching then builds a queue that never clears.</div>`}
+["ns","rs","ss","os"].forEach(i=>$("#"+i).oninput=()=>i=="ns"?upd3():upd4());
+$("#re1").onclick=()=>{seed1++;gen1();render1()};gen1();render1();$("#cb").innerHTML=bars(W.map(x=>Math.round(x*.837)),SL,i=>i>=4&&i<=7);
+
+/* ---------- Lab 1.2 ---------- */
+const R=[["R1","Live wait tile","during lunch",1,3,9,"Lakshmi","As the mess manager, I want the 10-minute average wait on one big tile, so that I can move staff while the queue builds.","Given a lunch in progress, when the average wait exceeds 90 s, then the tile turns red within 2 minutes."],
+["R2","Scans per 15 min vs capacity","during lunch",1,3,8,"Ravi","As the counter supervisor, I want scans per 15 minutes against what the open counters can serve, so that I know when we are short.","Given 8 counters open, when scans in the last 15 minutes exceed 166, then the tile turns red."],
+["R3","“Data as of” stamp","during lunch",1,1,7,"Ravi","As a supervisor, I want to see when the data were last updated, so that I never act on stale numbers.",""],
+["R4","Standby-counter alert","during lunch",1,5,7,"Lakshmi","As the mess manager, I want an alert when the standby counter should open, so that I act before the queue peaks.","Given a weekday lunch, when the wait indicator passes 90 s, then the alert “open standby counter” shows within 3 minutes."],
+["R5","Daily peak-wait trend","after lunch",1,3,8,"Prof. Rao","As committee chair, I want the peak wait for each day, so that I can see whether things improve.",""],
+["R6","Counter roster per slot","after lunch",0,5,7,"Documents","As a supervisor, I want staff per slot against load, so that rosters match demand.",""],
+["R7","Students lost (gave up)","after lunch",0,8,8,"Prof. Rao","As committee chair, I want to know how many students leave the queue, so that I can size the loss.",""],
+["R8","Payment-mode mix","after lunch",1,2,5,"Lakshmi","As the mess manager, I want the share of UPI, card and cash, so that I can plan terminals.",""],
+["R9","Line comparison","after lunch",1,2,4,"Ravi","As a supervisor, I want waits by serving line, so that I can rebalance lines.",""],
+["R10","Wait by programme or hostel","no decision",1,3,2,"Registrar","As an analyst, I would like waits by programme or hostel (aggregates only).",""],
+["R11","Demand forecast from door sensor","after lunch",0,8,9,"Documents","As the manager, I want arrivals predicted from a door sensor, so that I can staff ahead.",""],
+["R12","Weekly committee summary","after lunch",1,2,5,"Prof. Rao","As committee chair, I want a one-page weekly summary, so that I can report to the Dean.",""]];
+const moscow=x=>!x[3]?"Won’t":x[2]=="during lunch"?"Must":x[2]=="after lunch"?"Should":"Could";
+const ST=[["Lakshmi","Mess manager · keep informed","“At 12:40 the line is out of the door and I only hear it from students.”",["R1","R4","R8"]],
+["Ravi","Counter supervisor · keep informed","“I count heads by eye. I need to know when 8 counters are not enough, and how fresh the numbers are.”",["R2","R3","R9"]],
+["Prof. Rao","Committee chair · manage closely","“Each week I want to see if waits improve, and how many students give up.”",["R5","R7","R12"]],
+["Registrar","Data protection · keep satisfied","“No student identifiers on a wall screen. Aggregates only.” (non-functional: privacy)",["R10"]],
+["Report + survey","Documents","The 6-page report has no per-slot roster; survey comments say students skip lunch when the line is long.",["R6","R11"]]];
+const seen=new Set();
+ST.forEach((s,i)=>{const b=document.createElement("button");b.textContent=s[0];b.onclick=()=>{$("#quote").innerHTML=`<b>${s[0]}</b> <span class="mut">${s[1]}</span><br>${s[2]}`;if(!seen.has(i)){seen.add(i);s[3].forEach(id=>{const x=R.find(r=>r[0]==id);$("#board").insertAdjacentHTML("beforeend",`<div class="card2"><b>${x[0]} · ${x[1]}</b><br>${x[7]}${x[8]?`<br><i>Acceptance: ${x[8]}</i>`:""}</div>`)});$("#cnt").textContent=$("#board").children.length+" cards"}};$("#who").append(b)});
+const CK=[`<b>pragma_table_info('transactions')</b><br>txn_id · date · scan_time · line_id · wait_s · service_s<br><span class="mut">No door time and no “left the queue” flag → students who gave up are not recorded (R7 ✗).</span>`,
+`<b>staff by role and shift</b><br>Only a shift label per person, no per-slot roster.<br><span class="mut">→ R6 ✗ (data requirement logged).</span>`,
+`<b>arrivals vs scans, all 12 days</b><br>not_served = 0 on every day.<br><span class="mut">Scans = arrivals because arrivals are derived from scans. “Students lost” is therefore <u>unmeasurable</u>, not zero (R7, R11 ✗).</span>`];
+document.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>$("#chk").innerHTML=CK[b.dataset.c]);
+$("#bl").innerHTML="<tr><th>ID</th><th>Requirement</th><th>Decision</th><th>Data?</th><th>Effort</th><th>Value</th><th>MoSCoW</th></tr>"+R.map(x=>{const m=moscow(x);return `<tr><td>${x[0]}</td><td>${x[1]}</td><td>${x[2]}</td><td>${x[3]?"yes":"no"}</td><td>${x[4]}</td><td>${x[5]}</td><td class="${m[0]}">${m}</td></tr>`}).join("");
+const pick=new Set();
+R.filter(x=>["Should","Could"].includes(moscow(x))).forEach(x=>{const l=document.createElement("label");l.innerHTML=`<input type="checkbox" data-id="${x[0]}"> ${x[0]} ${x[1]} <span class="mut">(effort ${x[4]}, value ${x[5]})</span>`;l.firstChild.onchange=e=>{e.target.checked?pick.add(x[0]):pick.delete(x[0]);meters()};$("#pl").append(l)});
+const MU=R.filter(x=>moscow(x)=="Must");
+function meters(){const B=+$("#bud").value,sel=R.filter(x=>pick.has(x[0])),e=MU.concat(sel).reduce((s,x)=>s+x[4],0),v=MU.concat(sel).reduce((s,x)=>s+x[5],0),me=MU.reduce((s,x)=>s+x[4],0);
+ $("#mt").innerHTML=`<div><span class="big">${MU.length}</span><br>Musts (${me} pts = ${(me/B*100).toFixed(0)}% of budget)</div><div><span class="big" style="color:var(--${e>B?"bad":"fg"})">${e}/${B}</span><br>effort used</div><div><span class="big">${v}</span><br>value</div><div><span class="big">${MU.length+sel.length}</span><br>requirements</div><div><span class="big">${R.filter(x=>!x[3]).length}</span><br>Won’ts (data gaps)</div>`}
+function best(B){const rest=R.filter(x=>["Should","Could"].includes(moscow(x))),cap=B-MU.reduce((s,x)=>s+x[4],0);let bv=-1,bs=[];for(let m=0;m<1<<rest.length;m++){let e=0,v=0;rest.forEach((x,i)=>{if(m>>i&1){e+=x[4];v+=x[5]}});if(e<=cap&&v>bv){bv=v;bs=rest.filter((_,i)=>m>>i&1).map(x=>x[0])}}return[bs,bv+MU.reduce((s,x)=>s+x[5],0)]}
+$("#opt").onclick=()=>{const[b,v]=best(+$("#bud").value);document.querySelectorAll("#pl input").forEach(i=>{i.checked=b.includes(i.dataset.id);i.checked?pick.add(i.dataset.id):pick.delete(i.dataset.id)});meters();$("#optr").textContent="Best: Musts + "+b.join(", ")+" → total value "+v};
+$("#bud").onchange=()=>{$("#optr").textContent="";meters()};meters();
+
+/* ---------- Lab 1.3 ---------- */
+const BUD=10*Math.log2(1.25),LAG=2;
+const rate=m=>{const c=(m+.5)/15-.5,k=Math.floor(c),f=c-k,a=W[Math.max(0,Math.min(11,k))],b=W[Math.max(0,Math.min(11,k+1))];return(a*(1-f)+b*f)*.837/15};
+const LUN=[];for(let i=0;i<12;i++){const r=rng(100+i),sc=1+.1*gs(r),n=[],s=[];for(let m=0;m<180;m++){const ra=rate(m)*sc,c=Math.max(0,Math.round(ra+Math.sqrt(ra)*.7*gs(r)));n.push(c);s.push(c*(40+.42*ra*15+14*gs(r)/Math.sqrt(Math.max(c,1))))}
+ LUN.push({n,roll:n.map((_,m)=>{let a=0,b=0;for(let j=Math.max(0,m-9);j<=m;j++){a+=s[j];b+=n[j]}return b?a/b:0})});$("#lu").insertAdjacentHTML("beforeend",`<option value="${i}">Lunch ${i+1}</option>`)}
+function detect(L,Rr,TH){let on=-1;for(let m=30;m<180;m++)if(L.roll[m]>TH){on=m;break}if(on<0)return null;const rd=on+1;let T=Math.ceil(rd/Rr)*Rr;while(T<=180&&!(L.roll[T-1]>TH))T+=Rr;if(T>180)return{on,miss:1};const sh=T+LAG;let st=0;for(let m=rd;m<Math.min(sh,180);m++)st+=L.n[m];return{on,rd,sh,delay:sh-rd,st}}
+let t3=180,tm=null;
+function draw3(){const L=LUN[+$("#lu").value],Rr=+$("#rr").value,TH=+$("#ts").value,d=detect(L,Rr,TH);$("#tv").textContent=TH;
+ const w=640,H=250,X=m=>40+m/180*(w-50),Y=v=>H-28-(Math.min(160,Math.max(30,v))-30)/130*(H-40);
+ let s=`<svg viewBox="0 0 ${w} ${H}" width="100%"><g stroke="var(--bd)"><line x1="40" y1="${H-28}" x2="${w-10}" y2="${H-28}"/></g>`;
+ for(let m=0;m<=180;m+=30)s+=`<text x="${X(m)}" y="${H-12}" font-size="10" text-anchor="middle" fill="var(--mut)">${clk(m)}</text>`;
+ s+=`<line x1="40" x2="${w-10}" y1="${Y(TH)}" y2="${Y(TH)}" stroke="var(--mut)" stroke-dasharray="4 3"/><text x="${w-12}" y="${Y(TH)-4}" font-size="10" text-anchor="end" fill="var(--mut)">θ = ${TH} s</text><text x="44" y="14" font-size="10" fill="var(--mut)">10-min mean wait (s)</text>`;
+ let p1=[],p2=[];for(let m=0;m<=t3&&m<180;m++){p1.push(X(m)+","+Y(L.roll[m]));const i=Math.floor((m-LAG)/Rr)*Rr-1;if(i>=0)p2.push(X(m)+","+Y(L.roll[i]))}
+ s+=`<polyline points="${p1.join(" ")}" fill="none" stroke="var(--ac)" stroke-width="1.2" opacity=".6"/><polyline points="${p2.join(" ")}" fill="none" stroke="var(--fg)" stroke-width="3"/>`;
+ if(d){if(t3>=d.on)s+=`<line x1="${X(d.on)}" x2="${X(d.on)}" y1="10" y2="${H-28}" stroke="var(--wn)" stroke-width="2"/><text x="${X(d.on)-4}" y="24" font-size="10" text-anchor="end" fill="var(--wn)">onset ${clk(d.on)}</text>`;
+  if(!d.miss&&t3>=d.sh)s+=`<line x1="${X(d.sh)}" x2="${X(d.sh)}" y1="10" y2="${H-28}" stroke="var(--bad)" stroke-width="2"/><text x="${X(d.sh)+4}" y="24" font-size="10" fill="var(--bad)">alarm ${clk(d.sh)}</text>`}
+ if(t3<180)s+=`<line x1="${X(t3)}" x2="${X(t3)}" y1="10" y2="${H-28}" stroke="var(--mut)" stroke-width="1"/>`;
+ $("#ch").innerHTML=s+"</svg>";
+ if(!d){$("#ro").innerHTML="";$("#vd").textContent="The indicator never crosses θ on this lunch. Lower the threshold."}
+ else if(d.miss){$("#ro").innerHTML=`<div><span class="big">${clk(d.on)}</span><br>onset</div>`;$("#vd").textContent="With this refresh interval the dashboard never shows the alarm before the lunch ends."}
+ else{$("#ro").innerHTML=`<div><span class="big">${clk(d.on)}</span><br>surge onset</div><div><span class="big">${clk(d.sh)}</span><br>alarm on screen</div><div><span class="big">${d.delay} min</span><br>delay</div><div><span class="big">${d.st}</span><br>students arrive meanwhile</div>`;
+  $("#vd").textContent=d.delay<=BUD?`Within the ${BUD.toFixed(2)}-min budget: the action keeps at least 80% of its value.`:`${(d.delay-BUD).toFixed(1)} min over the ${BUD.toFixed(2)}-min budget. Shorten R, or use a pre-agreed rule such as opening the standby counter at 12:30.`}
+ const rows=[1,5,15,30,60].map(r=>{const ds=LUN.map(L=>detect(L,r,TH)).filter(x=>x&&!x.miss);return[r,ds.length?avg(ds.map(x=>x.delay)):NaN,ds.length?avg(ds.map(x=>x.st)):NaN,ds.length]}),mx=Math.max(20,...rows.map(r=>r[1]||0));
+ $("#tb").innerHTML="<tr><th>R (min)</th><th>Mean delay</th><th>Students in delay</th><th style='width:45%'>Delay vs budget</th></tr>"+rows.map(r=>`<tr><td>${r[0]}</td><td>${isNaN(r[1])?"–":r[1].toFixed(1)+" min"}</td><td>${isNaN(r[2])?"–":r[2].toFixed(0)}</td><td><div class="bw"><div class="bar" style="width:${(r[1]||0)/mx*100}%;background:var(--${r[1]<=BUD?"ok":"ac"})"></div><div class="bl" style="left:${BUD/mx*100}%"></div></div></td></tr>`).join("")}
+function stop(){clearInterval(tm);tm=null}
+["lu","rr","ts"].forEach(i=>$("#"+i).oninput=()=>{stop();t3=180;draw3()});
+$("#rs3").onclick=()=>{stop();t3=180;draw3()};
+$("#pl3").onclick=()=>{stop();t3=0;draw3();tm=setInterval(()=>{t3+=2;if(t3>=180){t3=180;stop()}draw3()},45)};
+draw3();
+
+/* ---------- persistence + submission ---------- */
+const LS="bidv.co1l";
+function saveL(){try{localStorage.setItem(LS,JSON.stringify({done:[...done],st3:[1,2,3,4].map(i=>$("#st3-"+i).value||""),pick:[...pick],bud:$("#bud").value,lu:$("#lu").value,rr:$("#rr").value,n:$("#sn").value,i:$("#si").value}))}catch(e){}}
+try{const z=JSON.parse(localStorage.getItem(LS)||"{}");
+ (z.done||[]).forEach(i=>done.add(i));
+ (z.st3||["","","",""]).forEach((v,i)=>{const el=$("#st3-"+(i+1));if(el)el.value=v});
+ (z.pick||[]).forEach(x=>pick.add(x));
+ if(z.bud)$("#bud").value=z.bud;
+ if(z.lu)$("#lu").value=z.lu;
+ if(z.rr)$("#rr").value=z.rr;
+ if(z.n)$("#sn").value=z.n; if(z.i)$("#si").value=z.i;
+ if(z.st3)score(); meters(); stop(); t3=180; draw3();
+}catch(e){}
+["st3-0","st3-1","st3-2","st3-3"].forEach(i=>$("#"+i).oninput=saveL);
+["bud","lu","rr"].forEach(i=>$("#"+i).onchange=saveL);
+$("#sn").oninput=$("#si").oninput=()=>{saveL();if(document.querySelector("[data-t=s4]").classList.contains("on"))reportL()};
+function esc(x){return (x||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+const ansL=x=>x&&x.trim()?esc(x):"Not written.";
+const wordsL=x=>(x||"").trim().split(/\s+/).filter(Boolean).length;
+function bodyL(nm,id){
+const c1=done.size+" of 12";
+const st3=[1,2,3,4].map(i=>ansL($("#st3-"+i).value));
+const MUv=MU.length,ME=MU.reduce((s,x)=>s+x[4],0);
+const selL=R.filter(x=>pick.has(x[0]));
+const eUsed=MU.concat(selL).reduce((s,x)=>s+x[4],0),vUsed=MU.concat(selL).reduce((s,x)=>s+x[5],0),B=+$("#bud").value;
+const L=LUN[+$("#lu").value],Rr=+$("#rr").value,TH=+$("#ts").value,d=detect(L,Rr,TH);
+const verdict=d?("miss" in d?"With R = "+Rr+" min the alarm is not shown before the lunch ends.":(d.delay<=BUD?"Within the "+BUD.toFixed(2)+"-min latency budget (delay "+d.delay+" min, alarm at "+clk(d.sh)+").":"Over the "+BUD.toFixed(2)+"-min budget by "+(d.delay-BUD).toFixed(1)+" min.")):"No crossing of the threshold on this lunch.";
+let h='<h2>Analytics Labs 1.1 – 1.3 · Submission report</h2><div class="hd"><div><b>Name:</b> '+esc(nm)+'</div><div><b>Student ID:</b> '+esc(id)+'</div><div><b>Date:</b> '+new Date().toLocaleDateString("en-IN")+'</div><div><b>Lab 1.1 Step 1:</b> '+c1+' classified correctly</div></div>';
+h+='<h3>Lab 1.1 · One sentence per answer type</h3>';
+["① Descriptive","② Diagnostic","③ Predictive","④ Prescriptive"].forEach((k,i)=>{h+='<div class="qb"><p><b>'+k+'</b></p><div class="ans">'+st3[i]+'</div></div>'});
+h+='<h3>Lab 1.2 · Release 1 plan ('+B+' points)</h3><div class="qb"><p><b>Musts (locked in):</b> '+MUv+' requirements, '+ME+' pts. <b>Ticked:</b> '+(selL.length?selL.map(x=>x[0]).join(", "):"none")+' → '+eUsed+'/'+B+' effort, value '+vUsed+'.</p></div>';
+h+='<h3>Lab 1.3 · Refresh-latency experiment</h3><div class="qb"><p><b>Settings:</b> Lunch '+(+$("#lu").value+1)+' · R = '+Rr+' min · θ = '+TH+' s. <b>Result:</b> '+verdict+'</p></div>';
+return h}
+function reportL(){
+const nm=$("#sn").value.trim(),id=$("#si").value.trim();
+const miss=[];if(!nm)miss.push("your name");if(!id)miss.push("your student ID number");
+let noW=0;[1,2,3,4].forEach(i=>{if(wordsL($("#st3-"+i).value)<5)noW++});
+const rep=$("#s4 .rep");
+let h='<p style="margin-top:6px">Download your report below. For the PDF, click <b>Save as PDF</b> and choose “Save as PDF” as the destination. Both files start with your ID. Upload the file your instructor asks for.</p><p style="display:flex;gap:10px;flex-wrap:wrap"><button class="pb" id="pdf"'+(miss.length?' disabled':'')+'>Save as PDF</button><button class="pb" id="doc"'+(miss.length?' disabled':'')+'>Download Word (.doc)</button></p>';
+if(miss.length)h='<div class="warn"><b>Before you save:</b> enter '+miss.join(" and ")+' at the top of the page.</div>'+h;
+else if(noW)h+='<div class="warn">'+noW+' staircase sentence(s) are empty or very short.</div>';
+else h+='<div class="okb">All parts are complete. Ready to download.</div>';
+$(".np").innerHTML=h;
+$("#rb").innerHTML=bodyL(nm,id);
+const fn="BIDV_Labs1_"+id.replace(/[^\w-]+/g,"_");
+$("#pdf").onclick=()=>{const old=document.title;document.title=fn;window.onafterprint=()=>{document.title=old};window.print()};
+$("#doc").onclick=()=>{const st='body{font-family:system-ui,Arial,sans-serif;font-size:11pt}h2,h3{color:#1F2A44}h3{border-top:1px solid #bbb;padding-top:6pt}.ans{background:#f3efe3;padding:6pt;margin:3pt 0;white-space:pre-wrap}.qb{margin:6pt 0 10pt}';
+const html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>'+fn+'</title><style>'+st+'</style></head><body>'+bodyL(nm,id)+'</body></html>';
+const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["﻿"+html],{type:"application/msword"}));a.download=fn+".doc";document.body.appendChild(a);a.click();a.remove()}}
+</script></body></html>
