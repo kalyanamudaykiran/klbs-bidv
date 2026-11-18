@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CO1 Teach-runbook · BI &amp; Data Visualization</title>
+<style>
+:root{--bg:#0F172A;--panel:#1E293B;--line:#2B3A55;--ink:#E2E8F0;--dim:#94A3B8;--amber:#F5B041;--navy:#14213D;--paper:#FAF7F0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font:15px/1.55 Arial,"Helvetica Neue",sans-serif;color:var(--ink);padding:0 0 40px}
+.top{display:flex;align-items:center;gap:12px;padding:10px 18px;background:rgba(15,23,42,.93);border-bottom:1px solid var(--line);position:sticky;top:0;flex-wrap:wrap}
+.top .brand{font-size:13px;letter-spacing:2px;color:var(--amber);font-weight:700}
+.top .crumb{font-size:13px;color:var(--dim)}
+.top .crumb a{color:var(--dim);text-decoration:none}
+.top .grow{flex:1}
+.top .btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;background:var(--amber);color:#14213D;font-weight:700;font-size:13px;padding:6px 14px;border-radius:8px}
+.top .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.sheet{max-width:840px;margin:24px auto 0;background:var(--paper);color:#1a1a1a;border-radius:10px;padding:34px 40px;box-shadow:0 24px 60px -24px rgba(0,0,0,.6)}
+.kick{color:#C2570C;font-size:13px;letter-spacing:2.4px;font-weight:700}
+h1{font-size:30px;color:var(--navy);margin:4px 0 2px}
+.sub{color:#5A6070;font-size:14px;margin-bottom:14px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:#4A5568;background:#fff;border:1.5px solid #E3DFD3;border-radius:10px;padding:10px 14px;margin-bottom:18px}
+.legend b{color:var(--navy)}
+table.seq{width:100%;border-collapse:collapse;background:#fff;border:1.5px solid #E3DFD3;border-radius:10px;overflow:hidden}
+.seq th{background:var(--navy);color:#fff;font-size:12.5px;letter-spacing:1px;text-align:left;padding:8px 12px}
+.seq td{border-top:1px solid #E3DFD3;padding:10px 12px;vertical-align:top;font-size:13.5px}
+.seq td.t{white-space:nowrap;font-weight:700;color:#C2570C;width:76px}
+.seq .bl{font-weight:700;color:var(--navy)}
+.seq a{color:#C2570C;text-decoration:none;border-bottom:1px dotted #C2570C}
+.seq .chk{color:#4A5568}
+.seq .chk::before{content:"Check · ";font-weight:700;color:var(--navy)}
+.cheat{margin-top:22px;background:#fff;border:1.5px solid #E3DFD3;border-radius:10px;padding:14px 16px}
+.cheat h2{font-size:15px;color:var(--navy);margin-bottom:8px}
+.cheat ul{list-style:none}
+.cheat li{padding:3px 0;font-size:13px}
+.cheat code{background:#14213D;color:#F5B041;border-radius:5px;padding:2px 7px;font-size:12px;font-family:Menlo,Consolas,monospace}
+.cheat .who{color:#5A6070;font-size:12.5px;margin-top:2px}
+.note{margin-top:14px;font-size:12.5px;color:#5A6070;line-height:1.5}
+footer{max-width:840px;margin:18px auto 0;color:var(--dim);font-size:12.5px;line-height:1.6;padding:0 8px}
+@media print{
+  body{background:#fff;padding:0}
+  .top{display:none}
+  .sheet{max-width:100%;margin:0;background:#fff;border-radius:0;padding:0;box-shadow:none}
+  .seq a{color:#000;border-bottom:none;text-decoration:underline}
+  .cheat code{background:#fff;color:#000;border:1px solid #bbb}
+  .sheet{break-inside:auto}
+  table.seq,tr{break-inside:avoid}
+}
+</style></head><body>
+<div class="top"><div class="brand">BIDV &middot; 26MB5210E</div><div class="crumb"><a href="index.html">Course</a> &nbsp;/&nbsp; CO1 Teach-runbook</div><div class="grow"></div><a class="btn ghost" href="co1-theory.html">Slides</a><a class="btn" href="#" onclick="window.print();return false">Print / Save PDF</a></div>
+
+<div class="sheet">
+  <div class="kick">INSTRUCTOR HANDOUT &middot; 90 MINUTES &middot; PROJECT + LAPTOPS</div>
+  <h1>CO1 teach-runbook: theory, then immediately the practice</h1>
+  <p class="sub">Business Intelligence &amp; Data Visualization (26MB5210E) &middot; one 90-minute session &middot; you project the slides, students open the links on their own laptops.</p>
+
+  <div class="legend">
+    <span><b>Teach</b> &mdash; the slides you project (open <a href="co1-theory.html">co1-theory.html</a>, arrow keys turn pages)</span>
+    <span><b>Try</b> &mdash; the link students open now; every answer auto-saves in their browser</span>
+    <span><b>Check</b> &mdash; one question you can ask in the room, no marks needed</span>
+  </div>
+
+  <table class="seq">
+    <tr><th>Block</th><th>Teach &middot; slides</th><th>Try &middot; student link</th><th>Check</th></tr>
+    <tr>
+      <td class="t">1 &middot; 15 min</td>
+      <td><span class="bl">What BI is &middot; S3&ndash;S4.</span> Data &rarr; information &rarr; insight &rarr; action; value only when a decision changes. Point at the &ldquo;Now try it&rdquo; chip at the bottom of S4.</td>
+      <td><a href="co1-dashboard.html#dikw">co1-dashboard.html#dikw</a><div class="who">Sort the five statements, then answer one &ldquo;what did I learn&rdquo;.</div></td>
+      <td class="chk">Ask one student to classify a statement from their own week (a class mark, a bus log) &mdash; where is the information, where the insight?</td>
+    </tr>
+    <tr>
+      <td class="t">2 &middot; 15 min</td>
+      <td><span class="bl">How value moves &middot; S5&ndash;S6.</span> The value chain and the lifecycle; where chains break. Chip on S5.</td>
+      <td><a href="co1-dashboard.html#value-chain">co1-dashboard.html#value-chain</a> then <a href="co1-dashboard.html#bakery">co1-dashboard.html#bakery</a><div class="who">Find the broken stage, then set the bakery quantities and compare your profit to the 30-a-day gut feeling.</div></td>
+      <td class="chk">Two cold calls: &ldquo;which stage did you break&rdquo; and &ldquo;what did you bake on a Saturday, and why?&rdquo;</td>
+    </tr>
+    <tr>
+      <td class="t">3 &middot; 20 min</td>
+      <td><span class="bl">Four kinds of questions &middot; S9&ndash;S10.</span> Descriptive, diagnostic, predictive, prescriptive &mdash; the maturity staircase. Read <b>The case</b> tab of the labs page together for 2 minutes. Chip on S10.</td>
+      <td><a href="co1-labs.html#case">co1-labs.html#case</a> then <a href="co1-labs.html#lab-1-1">co1-labs.html#lab-1-1</a><div class="who">Classify all twelve mess questions; answer one of each type; press &ldquo;New sample&rdquo; once to see the numbers move.</div></td>
+      <td class="chk">Score pill hits 12/12 &mdash; ask who acts on the prescriptive answer (the supervisor rosters the 12:45 shift).</td>
+    </tr>
+    <tr>
+      <td class="t">4 &middot; 20 min</td>
+      <td><span class="bl">Dashboards fit the audience; data gates the model &middot; S11, S12, S18.</span> Four dashboard types and the quality gate. Chip on S11, S12 and S18.</td>
+      <td><a href="co1-dashboard.html#dashboards">co1-dashboard.html#dashboards</a> then <a href="co1-labs.html#lab-1-2">co1-labs.html#lab-1-2</a><div class="who">Match the dashboard; interview the five stakeholders, run the three data checks, rank with MoSCoW and plan the 20-point release &mdash; then compare with &ldquo;best plan&rdquo;.</div></td>
+      <td class="chk">&ldquo;Which MoSCoW call do you disagree with, and which data check forced it?&rdquo;</td>
+    </tr>
+    <tr>
+      <td class="t">5 &middot; 15 min</td>
+      <td><span class="bl">Frame the decision &middot; S15&ndash;S16.</span> Work backwards: decision &rarr; question &rarr; metric &rarr; data; SMART-D. Chip on S16.</td>
+      <td><a href="co1-dashboard.html#framing">co1-dashboard.html#framing</a><div class="who">Write the decision behind &ldquo;a dashboard on sales&rdquo;, one business question, and one complete KPI.</div></td>
+      <td class="chk">One KPI read aloud &mdash; the room flags whether it has formula, unit, grain, source and owner.</td>
+    </tr>
+    <tr>
+      <td class="t">6 &middot; 5 min</td>
+      <td><span class="bl">Wrap &middot; S20.</span> The &ldquo;I can now&rdquo; checklist; homework: one activity from each dashboard part.</td>
+      <td><a href="co1-dashboard.html#submission">co1-dashboard.html#submission</a><div class="who">Enter name + student ID, complete any missing write-ups, save the PDF (and Word if asked).</div></td>
+      <td class="chk">Submissions tab shows &ldquo;All parts are complete&rdquo; &mdash; no empty or one-word write-ups.</td>
+    </tr>
+  </table>
+
+  <div class="cheat">
+    <h2>Student links, straight to each station</h2>
+    <ul>
+      <li>Slides <code>co1-theory.html</code> &middot; open once, arrow keys or F for fullscreen</li>
+      <li>DIKW sorter <code>co1-dashboard.html#dikw</code> &middot; chain break <code>#value-chain</code> &middot; dashboards <code>#dashboards</code> &middot; framing <code>#framing</code> &middot; bakery sim <code>#bakery</code> &middot; submit <code>#submission</code></li>
+      <li>The case <code>co1-labs.html#case</code> &middot; Lab 1.1 <code>#lab-1-1</code> &middot; Lab 1.2 <code>#lab-1-2</code> &middot; Lab 1.3 <code>#lab-1-3</code> &middot; submit <code>#submission</code></li>
+    </ul>
+    <p class="note"><b>How it works:</b> everything runs in the browser &mdash; no installs, no accounts. Answers save automatically in each student&rsquo;s own browser (per station); the Submission tabs build a named PDF/Word report from what they did. <b>No laptops?</b> Teach each block projected; students hand-write the write-up sentences, you collect on paper &mdash; the check questions work unchanged.</p>
+  </div>
+</div>
+
+<footer>Faculty Instructors: Hema Divya Kantamaneni &middot; Venkateswara Kumar K S &middot; Uday Kalyanam &nbsp;&middot;&nbsp; Course Coordinator: Hema Divya Kantamaneni &middot; Dept of MBA (KLVZA)</footer>
+</body></html>

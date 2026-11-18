@@ -57,6 +57,7 @@ body{max-width:100%;padding:0}
 <div class="top"><div class="brand">BIDV &middot; 26MB5210E</div><div class="crumb"><a href="index.html">Course</a> &nbsp;/&nbsp; CO1 Labs</div><div class="grow"></div><a class="btn" href="co1-theory.html">Slides</a><a class="btn" href="co1-dashboard.html">Dashboard</a><a class="btn ghost" href="index.html">All modules</a></div>
 <h1>Analytics Labs 1.1 – 1.3 · Interactive simulations</h1>
 <p class="mut">Learn by doing: classify, interview, then replay a lunch rush. All data are simulated in your browser to resemble the Guild mess scans (numbers will differ slightly from the real CSV).</p>
+<p style="font-size:12.5px;color:var(--mut);margin:6px 0 0">Teaching this page in class? <a href="co1-runbook.html" style="color:inherit">CO1 Teach-runbook</a> &middot; the 90-minute teach &rarr; try &rarr; check sequence, print-ready.</p>
 <div class="id"><label>Student name<input id="sn" type="text" autocomplete="name" placeholder="Your full name"></label><label>Student ID number<input id="si" type="text" placeholder="e.g. 2400012345"></label></div>
 <div class="tabs"><button class="on" data-t="s0">The case</button><button data-t="s1">Lab 1.1 Four analytics types</button><button data-t="s2">Lab 1.2 Requirements</button><button data-t="s3">Lab 1.3 Refresh latency</button><button data-t="s4">Submission</button></div>
 
@@ -147,7 +148,12 @@ const rng=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.i
 const gs=r=>Math.sqrt(-2*Math.log(r()+1e-9))*Math.cos(6.2832*r());
 const avg=a=>a.reduce((s,v)=>s+v,0)/a.length;
 const clk=m=>{m+=690;return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0")};
-document.querySelectorAll(".tabs button[data-t]").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button[data-t]").forEach(x=>x.classList.toggle("on",x===b));document.querySelectorAll("section").forEach(s=>s.hidden=s.id!==b.dataset.t);if(b.dataset.t=="s4")reportL()});
+function gotoLab(t){document.querySelectorAll(".tabs button[data-t]").forEach(x=>x.classList.toggle("on",x.dataset.t===t));document.querySelectorAll("section").forEach(s=>s.hidden=s.id!==t);if(t=="s4")reportL();}
+document.querySelectorAll(".tabs button[data-t]").forEach(b=>b.onclick=()=>{gotoLab(b.dataset.t);history.replaceState(null,"","#"+b.dataset.t)});
+const LSLUGS={"lab-1-1":"s1","lab-1-2":"s2","lab-1-3":"s3",s1:"s1",s2:"s2",s3:"s3",s4:"s4",s0:"s0",case:"s0",submission:"s4"};
+function labHash(){const m=location.hash.replace(/^#/,"");gotoLab( LSLUGS[m]||"s0");}
+window.onhashchange=labHash;
+requestAnimationFrame(labHash);
 
 /* ---------- Lab 1.1 ---------- */
 const TY=["Descriptive","Diagnostic","Predictive","Prescriptive"],HINT=["a fact about the past","an explanation of why","a forecast with uncertainty","an action to take"];
