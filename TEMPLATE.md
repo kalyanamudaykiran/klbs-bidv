@@ -39,6 +39,7 @@ web apps:
 | `co{X}-lab.ipynb` uploaded to Drive | **no notebooks, no Drive** — everything is one self-contained HTML file per page |
 | no student submission mechanism | **both interactive pages capture submissions**: name + student ID, `localStorage`, a Submission tab, `@media print` PDF + msword-Blob `.doc` download, files named `BI_Module{X}_{ID}` / `BIDV_Labs{X}_{ID}` |
 | — | **extra page PFB has not got**: `co{X}-dashboard.html` — the tabbed theory-and-simulation dashboard (quizzes + note boxes + a decision sim + write-up prompts + Submission tab). Shipped for CO1 only; add for later modules when the material calls for it |
+| — | **`co{X}-notes.html`** — the exam-notes page (PFB CO1 pattern, shipped for BIDV CO1 on 2026-11-19): exam-framed theory notes per COI, one-table cheat sheets, a final checklist, and a fold-out practice paper (six 2-mark + six 5-mark, model answers). Shipped for CO1 only; add for later modules after the deck lands |
 
 Consequences:
 - Every page must stay **fully self-contained** (no CDN, no external JS/CSS/images, no fetch).
@@ -52,10 +53,11 @@ Consequences:
 
 A 28-px-ish navy bar (`#0F172A`) at the very top: brand `BIDV · 26MB5210E` (amber `#F5B041`,
 letter-spaced) · crumb `Course / {page}` (Course links to `index.html`) · grow spacer ·
-reciprocal buttons (Slides ⇄ Practice ⇄ Labs, amber `btn` or ghost variant; the
+reciprocal buttons (Slides ⇄ Notes ⇄ Practice ⇄ Labs, amber `btn` or ghost variant; the
 `co1-dashboard.html` page is labelled **Practice**, not Dashboard) · `All modules`
-ghost button. Each interactive page (practice, labs) carries buttons for its siblings *and*
-the deck; the deck's PFB-style header carries `Practice` + `Labs` + `All modules`.
+ghost button. Each interactive page (practice, labs, notes) carries buttons for its siblings
+*and* the deck; the deck's PFB-style header carries `Notes` + `Practice` + `All modules`
+(plus `Labs` when re-enabled).
 **Labs disabled 2026-11-19:** while off, no page links to `co1-labs.html` (hub button and
 deck/Labs buttons dropped, `co1-labs.html` keeps a "switched off" banner; deck chips that used
 to target labs now point at practice tabs — originals kept as `# Labs disabled` comments in
@@ -68,7 +70,9 @@ Print: `.top` is hidden under `@media print` on the interactive pages.
 Navy `#0F172A` / amber `#F5B041` grid: row 1 = CO1 tile, rows 2–4 = CO2–CO6 (the former
 full-width "START HERE" intro tile was removed 2026-11-19). Shipped tile = `Slides` +
 `Practice` buttons (plus `Labs` when re-enabled; drop `Practice` where a module ships no
-practice page), unshipped = `card.soon` + "Coming soon". Faculty + coordinator footer
+practice page), unshipped = `card.soon` + "Coming soon". When a module ships the notes
+page, the tile also carries a `Notes` ghost button between `Slides` and `Practice`.
+Faculty + coordinator footer
 (§1). Sub-line carries the L-T-P-S structure (`2-1-3-0`).
 
 ### Tile promotion (when a module ships)
@@ -84,6 +88,7 @@ practice page), unshipped = `card.soon` + "Coming soon". Faculty + coordinator f
 | Hub | `index.html` |
 | Slide deck (PFB-style, 1280×720 stage) | `co{X}-theory.html` |
 | Theory + simulation dashboard (interactive; CO1 only so far) | `co{X}-dashboard.html` |
+| Exam notes: theory + cheat sheets + fold-out practice paper (CO1 only so far) | `co{X}-notes.html` |
 | In-browser labs | `co{X}-labs.html` |
 | Build spec (this file) | `TEMPLATE.md` |
 
