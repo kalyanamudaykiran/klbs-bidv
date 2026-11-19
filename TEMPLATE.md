@@ -52,27 +52,30 @@ Consequences:
 
 A 28-px-ish navy bar (`#0F172A`) at the very top: brand `BIDV · 26MB5210E` (amber `#F5B041`,
 letter-spaced) · crumb `Course / {page}` (Course links to `index.html`) · grow spacer ·
-reciprocal buttons (Slides ⇄ Dashboard ⇄ Labs, amber `btn` or ghost variant) · `All modules`
-ghost button. Each interactive page (dashboard, labs) carries buttons for its siblings *and*
-the deck; the deck's PFB-style header carries `Dashboard` + `Labs` + `All modules`.
+reciprocal buttons (Slides ⇄ Practice ⇄ Labs, amber `btn` or ghost variant; the
+`co1-dashboard.html` page is labelled **Practice**, not Dashboard) · `All modules`
+ghost button. Each interactive page (practice, labs) carries buttons for its siblings *and*
+the deck; the deck's PFB-style header carries `Practice` + `Labs` + `All modules`.
+**Labs disabled 2026-11-19:** while off, no page links to `co1-labs.html` (hub button and
+deck/Labs buttons dropped, `co1-labs.html` keeps a "switched off" banner; deck chips that used
+to target labs now point at practice tabs — originals kept as `# Labs disabled` comments in
+`/tmp/bidv_co1_deck2.py`). Re-enabling = re-add the buttons + swap the chips back.
 The hub `index.html` carries no header — it *is* the nav.
 Print: `.top` is hidden under `@media print` on the interactive pages.
 
 ## 5 · Hub `index.html`
 
-PFB's grid verbatim (navy `#0F172A`, amber `#F5B041`): 1–2–2–2 —
-row 1 = full-width "START HERE" tile (blue-glass intro card, `Start CO1` amber button →
-`co1-theory.html` slides, plus `Dashboard` and `Labs` ghost buttons);
-rows 2–4 = CO1–CO6 tiles, each `CO{n} · {KICK}` + module title; shipped = three buttons
-(`Slides` + `Dashboard` + `Labs`, drop `Dashboard` where a module ships no dashboard),
-unshipped = `card.soon` + "Coming soon". Faculty + coordinator footer
+Navy `#0F172A` / amber `#F5B041` grid: row 1 = CO1 tile, rows 2–4 = CO2–CO6 (the former
+full-width "START HERE" intro tile was removed 2026-11-19). Shipped tile = `Slides` +
+`Practice` buttons (plus `Labs` when re-enabled; drop `Practice` where a module ships no
+practice page), unshipped = `card.soon` + "Coming soon". Faculty + coordinator footer
 (§1). Sub-line carries the L-T-P-S structure (`2-1-3-0`).
 
 ### Tile promotion (when a module ships)
 
 1. `class="card soon"` → `class="card"`
 2. Replace `<span class="tag-soon">Coming soon</span>` with the buttons above
-3. No other edits — the `START HERE` tile keeps pointing at CO1.
+3. No other edits.
 
 ## 6 · File naming
 
