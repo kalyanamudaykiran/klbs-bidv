@@ -56,12 +56,13 @@ letter-spaced) · crumb `Course / {page}` (Course links to `index.html`) · grow
 reciprocal buttons (Slides ⇄ Notes ⇄ Practice ⇄ Labs, amber `btn` or ghost variant; the
 `co1-dashboard.html` page is labelled **Practice**, not Dashboard) · `All modules`
 ghost button. Each interactive page (practice, labs, notes) carries buttons for its siblings
-*and* the deck; the deck's PFB-style header carries `Notes` + `Practice` + `All modules`
-(plus `Labs` when re-enabled).
-**Labs disabled 2026-11-19:** while off, no page links to `co1-labs.html` (hub button and
-deck/Labs buttons dropped, `co1-labs.html` keeps a "switched off" banner; deck chips that used
-to target labs now point at practice tabs — originals kept as `# Labs disabled` comments in
-`/tmp/bidv_co1_deck2.py`). Re-enabling = re-add the buttons + swap the chips back.
+*and* the deck; the deck's PFB-style header carries `Notes` + `Practice` + `Labs` +
+`All modules`.
+**Labs re-enabled 2026-11-21** (had been disabled 2026-11-19, commit 1aa071c): the `Labs`
+buttons are back on the hub CO1 tile and the deck/practice/notes headers, and
+`co1-labs.html` no longer carries a "switched off" banner. The current Canva-based deck
+carries no in-slide chips, so nothing there needed re-targeting. Disabling again = drop
+those four buttons + re-add the banner on `co1-labs.html`.
 The hub `index.html` carries no header — it *is* the nav.
 Print: `.top` is hidden under `@media print` on the interactive pages.
 
@@ -69,9 +70,8 @@ Print: `.top` is hidden under `@media print` on the interactive pages.
 
 Navy `#0F172A` / amber `#F5B041` grid: row 1 = CO1 tile, rows 2–4 = CO2–CO6 (the former
 full-width "START HERE" intro tile was removed 2026-11-19). Shipped tile = `Slides` +
-`Practice` buttons (plus `Labs` when re-enabled; drop `Practice` where a module ships no
-practice page), unshipped = `card.soon` + "Coming soon". When a module ships the notes
-page, the tile also carries a `Notes` ghost button between `Slides` and `Practice`.
+`Notes` + `Practice` + `Labs` buttons (drop `Practice` where a module ships no
+practice page, `Labs` where it ships no labs page), unshipped = `card.soon` + "Coming soon".
 Faculty + coordinator footer
 (§1). Sub-line carries the L-T-P-S structure (`2-1-3-0`).
 
